@@ -1,5 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import Image from "next/image";
+import { useState } from "react";
 
 
 
@@ -17,6 +18,14 @@ query ProductBulkDiscount {
 `;
 
 export default function Home() {
+
+  const [selectedItem, setSelectedItem] = useState(null);
+  console.log(selectedItem);
+
+  const handleBoxClick = (item) => {
+    setSelectedItem(item);
+  };
+
   const { loading, data, error } = useQuery(AllData);
   console.log(data);
 
@@ -221,8 +230,11 @@ export default function Home() {
 
             return(
               <div 
-                className="box-border h-[80px] w-[512px] max-sm:w-full p-4 border border-black flex gap-5  mb-4 bg-white rounded-md hover:bg-yellow-400"
-                key={item.id} >
+                className={`box-border h-[80px] w-[512px] max-sm:w-full p-4 border border-black flex gap-5  mb-4 cursor-pointer rounded-md 
+                ${ selectedItem === item ? 'bg-yellow-400' : 'bg-white'}`}
+                key={item.id}
+                onClick={() => handleBoxClick(item)} 
+                >
             <div className=" flex-grow-0 pt-2 ">
               <span className="text-lg text-black font-bold max-sm:text-[13px] ">Buy {item.quantity} &
                 <span className="text-lg text-red-600 font-bold max-sm:text-[13px]"> Get {totalValue}%off</span>
