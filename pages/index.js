@@ -1,8 +1,28 @@
+import { gql, useQuery } from "@apollo/client";
 import Image from "next/image";
 
 
 
+const AllData = gql`
+query ProductBulkDiscount {
+  product(id: "cHJvZHVjdDoxMQ==") {
+    id
+    name
+    bulkDiscountData {
+      quantity
+      price
+    }
+  }
+}
+`;
+
 export default function Home() {
+  const { loading, data, error } = useQuery(AllData);
+  console.log(data);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
   return (
     <div>
     <div className="rounded-b-2xl max-sm:w-full bg-white mb-sm-y-spacing pb-4">
@@ -162,7 +182,7 @@ export default function Home() {
                 <div className="my-4 flex gap-4">
                   <span
                     className="text-heading text-[40px] font-extrabold flex-initial "
-                    >$30.49
+                    >$30.00
                     </span
                   >
                   <span className="mt-2 -ml-4 ">PER UNIT</span>
@@ -176,10 +196,11 @@ export default function Home() {
             <div className=" flex-grow-0  ">
               <p className=" text-lg font-bold max-sm:text-[13px] ">Buy Croc's Needle Nose Wire Strippers</p>
             </div>
+            
             <div className=" flex max-sm:ml-8">
               <span
                   className="text-heading text-xl font-bold flex   max-sm:text-[16px]  text-red-600"
-                  >$30.49
+                  >$30.00
                   </span
                 >
               <p className="mt-2 text-xs text-black font-semibold  ">PER UNIT</p>
@@ -187,26 +208,41 @@ export default function Home() {
           </div>
           <div className=" box-border h-[18px] w-[118px] p-4 bg-black ml-[360px] max-sm:ml-[300px] ">
             <p className="text-white text-sm -mt-2 font-normal">Most Popular</p>
-
           </div>
-          <div className="box-border h-[80px] w-[512px] max-sm:w-full p-4 border flex gap-5  mb-4 bg-yellow-400 rounded-md">
+
+          { 
+          data?.product?.bulkDiscountData?.map((item) => {
+
+            const discountValue = 100 - (item.price / 30) * 100;
+            const totalValue = Math.abs(discountValue);
+
+            const totalUnit = (item.quantity) * (item.price);
+            const totalPrice = Math.abs(totalUnit);
+
+            return(
+              <div 
+                className="box-border h-[80px] w-[512px] max-sm:w-full p-4 border border-black flex gap-5  mb-4 bg-white rounded-md hover:bg-yellow-400"
+                key={item.id} >
             <div className=" flex-grow-0 pt-2 ">
-              <span className="text-lg text-black font-bold max-sm:text-[13px] ">Buy 2 &
-                <span className="text-lg text-red-600 font-bold max-sm:text-[13px]"> Get 10%off</span>
+              <span className="text-lg text-black font-bold max-sm:text-[13px] ">Buy {item.quantity} &
+                <span className="text-lg text-red-600 font-bold max-sm:text-[13px]"> Get {totalValue}%off</span>
               </span>
             </div>
             <div className=" flex-grow-0 ml-[150px] -mt-2">
               <div>
-              <span className=" text-base text-red-600 max-sm:text-[16px] max-sm:font-semibold ">$51.83 </span>
+              <span className=" text-base text-red-600 max-sm:text-[16px] max-sm:font-semibold ">${totalPrice} </span>
               <span className=" text-sm text-black-400 line-through max-sm:text-[16px] max-sm:font-semibold">$60.98 </span>
               </div>
               <div className=" flex">
-                <span className="text-2xl text-black font-semibold max-sm:text-[16px]  max-sm:font-bold">$25.92</span>
+                <span className="text-2xl text-black font-semibold max-sm:text-[16px]  max-sm:font-bold">{item.price}</span>
                 <p className="text-xs text-black font-semibold pt-3 max-sm:text-[5] max-sm:font-bold max-sm:pt-2">PER UNIT</p>
               </div>
             </div>
-          </div>
-          <div className="box-border h-[90px] w-[512px] max-sm:w-full p-4 border flex gap-5 border-black mb-4  rounded-md">
+            </div>
+            )}
+          )}
+
+          {/* <div className="box-border h-[90px] w-[512px] max-sm:w-full p-4 border flex gap-5 border-black mb-4  rounded-md">
             <div className=" flex-grow-0 pt-1">
               <div>
                 <span className="text-lg text-black font-bold max-sm:text-[13px]">Buy 3 &
@@ -329,7 +365,7 @@ export default function Home() {
                 <p className="text-xs text-black font-semibold pt-3 max-sm:font-bold max-sm:pt-2">PER UNIT</p>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="basis-full sm:order-2 box-border h-[70px] w-[517px] p-4 bg-amber-500 max-sm:w-full flex  mt-[50px] rounded-full">
                 <button
                   className="w-full  bg-racky-orange px-8 text-xl font-body  font-extrabold rounded-full mb-sm-y-spacing"
