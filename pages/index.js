@@ -18,14 +18,30 @@ const AllData = gql`
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [count, setCount] = useState(0);
+  const [cart, setCart] = useState([]);
   console.log(selectedItem);
 
   const handleBoxClick = (item) => {
     setSelectedItem(item);
   }; 
 
+  const addToCart = (product) => {
+    setCart((currentCart) => {
+      const index = currentCart.findIndex((item) => item.id === product.id);
+      if (index >= 0) {
+        const newCart = [...currentCart];
+        newCart[index].quantity += 1;
+        return newCart;
+      }
+      else {
+        return [...currentCart, {...product, quantity: 1 }];
+      }
+    });
+  };
+
   const { loading, data, error } = useQuery(AllData);
   console.log(data);
+  console.log(cart);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -392,7 +408,8 @@ export default function Home() {
             </div>
           </div> */}
             <div className="basis-full sm:order-2 box-border h-[70px] w-[517px] p-4 bg-amber-500 max-sm:w-full flex  mt-[50px] rounded-full">
-              <button className="w-full  bg-racky-orange px-8 text-xl font-body  font-extrabold rounded-full mb-sm-y-spacing">
+              <button className="w-full  bg-racky-orange px-8 text-xl font-body  font-extrabold rounded-full mb-sm-y-spacing"
+              onClick={() => addToCart({id: 1, name: 'Product 1'})}>
                 <span className="flex justify-center items-center">
                   <svg
                     stroke="currentColor"
@@ -427,6 +444,14 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <h2>Cart:</h2>
+                <ul>
+                  {cart.map((item) => (
+                    <li key={item.id}>
+                      {item.name} - Quantity: {item.quantity}
+                    </li>
+                  ))}
+                </ul>
 
       {/* <div className="p-information bg-white rounded-[19px]">
         <div className="flex mb-sm-y-spacing">
