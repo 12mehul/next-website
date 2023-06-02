@@ -10,7 +10,9 @@ const AllData = gql`
       bulkDiscountData {
         quantity
         price
+        freeProduct
       }
+      
     }
   }
 `;
@@ -18,7 +20,7 @@ const AllData = gql`
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [count, setCount] = useState(0);
-  const [cart, setCart] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   console.log(selectedItem);
 
   const handleBoxClick = (item) => {
@@ -26,29 +28,37 @@ export default function Home() {
   }; 
 
   const addToCart = (product) => {
-    setCart((currentCart) => {
-      const index = currentCart.findIndex((item) => item.id === product.id);
-      if (index >= 0) {
-        const newCart = [...currentCart];
-        newCart[index].quantity += 1;
-        return newCart;
-      }
-      else {
-        return [...currentCart, {...product, quantity: 1 }];
-      }
-    });
+    const existingItem = cartItems.find(item => item.id === product.id);
+
+    if (existingItem) {
+      const updatedCart = cartItems.map(item => {
+        if (item.id === product.id) {
+          return { ...item, quantity: item.quantity + 1 };
+        }
+        return item;
+      });
+      setCartItems(updatedCart);
+    } else {
+      setCartItems([...cartItems, { ...product, quantity: 1 }]);
+    }
+  };
+
+  // Function to remove a product from the cart
+  const removeFromCart = (productId) => {
+    const updatedCart = cartItems.filter(item => item.id !== productId);
+    setCartItems(updatedCart);
   };
 
   const { loading, data, error } = useQuery(AllData);
   console.log(data);
-  console.log(cart);
+  console.log(cartItems);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div>
-      <div className="rounded-b-2xl max-sm:w-full bg-white mb-sm-y-spacing pb-4">
+      <div className="rounded-b-2xl max-sm:w-full bg-white mb-sm-y-spacing pb-4 font-">
         <div className="mx-auto px-sm-x-margin mb-sm-y-spacing lg:container flex justify-between px-2">
           <div className="flex gap-2 ">
             <div className="flex items-center gap-2 hover:underline cursor-pointer font-medium">
@@ -83,22 +93,22 @@ export default function Home() {
           #48020
         </div>
 
-        <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:container  ">
+        <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:container  ">
           <div className="flex flex-row ">
             <div className="basis-1/4 flex-col p-5  ">
               <div className="flex justify-center">
                 <Image src="/arrowup.svg" width="50" height="50"></Image>
               </div>
-              <div className=" box-border h-[92px] w-[92px] p-4 border-[1px] flex border-black my-4 rounded-[24px] pt-2">
+              <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
                 <Image src="/tool.png" width="100" height="100"></Image>
               </div>
-              <div className=" box-border h-[92px] w-[92px] p-4 border-[1px] flex border-black my-4 rounded-[24px] pt-2">
+              <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
                 <Image src="/image20.jpg" width="100" height="100"></Image>
               </div>
-              <div className=" box-border h-[92px] w-[92px] p-4 border-[1px] flex border-black my-4 rounded-[24px] pt-2">
+              <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
                 <Image src="/image 20 (2).jpg" width="100" height="100"></Image>
               </div>
-              <div className=" box-border h-[92px] w-[92px] p-4 border-[1px] flex border-black my-4 rounded-[24px] pt-2">
+              <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
                 <Image src="/sddefault 1.png" width="100" height="100"></Image>
               </div>
               <div className="flex justify-center">
@@ -107,19 +117,19 @@ export default function Home() {
             </div>
             <div className="basis-1/4 -ml-6">
               <div className="basis-1/4 flex-col p-5 max-sm:p-3 max-sm:w[300px]">
-                <div className=" box-border h-[490px] w-[480px]  p-4 border-[1px] flex border-black my-4 rounded-[24px] pt-2 mr-10">
+                <div className=" box-border h-[490px] w-[480px]  p-4 border-2 flex border-black my-4 rounded-2xl pt-2 mr-10">
                   <Image src="/tool.png" width="500" height="500"></Image>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="self-start px-2 p-5 w-full ">
+          <div className=" px-2 p-5 w-full ">
             <div className="px-sm-x-margin  ">
-              <h1 className="font-heading font-extrabold text-3xl pb-sm-y-spacing basis-full mb-3">
+              <h1 className=" font-bold text-3xl basis-full">
                 Croc's Needle Nose Wire Strippers
               </h1>
-              <h2 className="font-body font-bold mb-sm-y-spacing mb-3  ">
+              <h2 className=" font-semibold text-xl mt-2 ">
                 Multi-use handheld wire strippers
               </h2>
               <div className="overflow-hidden transition-[max-height] relative z-0">
@@ -133,7 +143,7 @@ export default function Home() {
                   <div className="relative w-full h-8 bg-gradient-to-b from-transparent to-white"></div>
                 </div>
               </div>
-              <div className="flex h-5">
+              <div className="flex h-5 mt-4">
                 <svg viewBox="0 0 80 14.240479" version="1.1" height="100%">
                   <defs>
                     <linearGradient
@@ -157,17 +167,17 @@ export default function Home() {
                     ></path>
                   </g>
                 </svg>
-                <a className="" href="#reviews">
-                  <p className="underline">(0 Reviews)</p>
+                <a className=" ml-3" href="#reviews">
+                  <p className=" font-semibold border-b border-black ">(0 Reviews)</p>
                 </a>
-                <div className="border-r border-gray self-stretch ml-1 mr-1"></div>
-                <p className="text-green-600">In Stock (20)</p>
+                <div className=" font-semibold text-base ml-2">|</div>
+                <p className=" font-normal text-green-600 ml-2">In Stock (20)</p>
               </div>
             </div>
             <div className="px-sm-x-margin pt-sm-y-spacing">
               <div className="flex w-full items-start flex-wrap">
                 <div className="mb-sm-y-spacing sm:order-2">
-                  <div className="mb-sm-y-spacing font-heading">
+                  <div className="mb-sm-y-spacing font-heading font-semibold text-xl">
                     Choose How Many:
                   </div>
                 </div>
@@ -185,31 +195,31 @@ export default function Home() {
               </div> */}
                 <div className="sm:order-0 basis-full">
                   <div className="my-4 flex gap-4">
-                    <span className="text-heading text-[40px] font-extrabold flex-initial ">
+                    <span className="text-heading text-5xl font-bold flex-initial ">
                       $30.00
                     </span>
-                    <span className="mt-2 -ml-4 ">PER UNIT</span>
+                    <span className="mt-5 -ml-4 font-normal text-lg">PER UNIT</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div className=" box-border h-[67px] w-[512px] max-sm:w-full  p-4 border-[1px] flex gap-5  border-black my-4 rounded-md ">
-              <div className=" flex-grow-0  ">
-                <p className=" text-lg font-bold max-sm:text-[13px] ">
+            <div className=" box-border h-[85px] w-[500px] max-sm:w-full  p-4 border-2  border-[#8C8C8C] my-2 rounded-lg ">
+              <div>
+                <p className=" text-xl font-bold max-sm:text-[13px] ">
                   Buy Croc's Needle Nose Wire Strippers
                 </p>
               </div>
 
               <div className=" flex max-sm:ml-8">
-                <span className="text-heading text-xl font-bold flex   max-sm:text-[16px]  text-red-600">
+                <span className="text-heading text-2xl font-extrabold max-sm:text-[16px]  text-[#E01F00]">
                   $30.00
                 </span>
-                <p className="mt-2 text-xs text-black font-semibold  ">
+                <p className="mt-3 text-sm text-black font-semibold">
                   PER UNIT
                 </p>
               </div>
             </div>
-            <div className=" box-border h-[18px] w-[118px] p-4 bg-black ml-[360px] max-sm:ml-[300px] ">
+            <div className=" box-border h-[18px] w-[118px] p-4 bg-black ml-[360px] max-sm:ml-[300px] mt-5">
               <p className="text-white text-sm -mt-2 font-normal">
                 Most Popular
               </p>
@@ -223,60 +233,70 @@ export default function Home() {
 
               const totalUnit = item.quantity * item.price;
               const totalPrice = Math.abs(totalUnit);
+              const actualPrice = Math.abs(item.quantity * 30);
 
               return (
                 <div
-                  className={`box-border h-[80px] w-[512px] max-sm:w-full p-4 border border-black flex gap-5  mb-4 cursor-pointer rounded-md 
-                ${selectedItem === item ? "bg-yellow-400" : "bg-white"}`}
+                  className={`box-border h-[85px] w-[500px] max-sm:w-full p-4 flex gap-5  mb-4 cursor-pointer rounded-lg 
+                ${selectedItem === item ? "bg-[#FDCE0D] border-none" : "bg-white border-2 border-[#8C8C8C]"}`}
                   key={item.id}
                   onClick={() => handleBoxClick(item)}
                 >
+                <div>
                   { isLastItem ? (
-                  <div className=" flex-grow-0 pt-2 ">
+                  <div className=" flex-grow-0 pt-1 ">
                     <span className="text-lg text-black font-bold max-sm:text-[13px] ">
                       Buy {lastValue} &
-                      <span className="text-lg text-red-600 font-bold max-sm:text-[13px]">
+                      <span className="text-lg text-[#E01F00] font-bold max-sm:text-[13px]">
                         {" "}
                         Get {totalValue}%off
                       </span>
                     </span>
+                    <div className=" flex">
+                      <button
+                        className="pb-1 w-7 h-7 bg-[#F7921D] rounded-full text-4xl font-semibold flex items-center justify-center"
+                        onClick={() => setCount(count - 1)}>-</button>
+                      <span className=" ml-3">{count}</span>
+                      <button
+                        className="ml-3 w-7 h-7 bg-[#F7921D] rounded-full text-3xl font-semibold flex items-center justify-center"
+                        onClick={() => setCount(count + 1)}>+</button>
+                    </div>  
                   </div>
                   ) : (
-                    <div className=" flex-grow-0 pt-2 ">
+                    <div className=" flex-grow-0 pt-1 ">
                     <span className="text-lg text-black font-bold max-sm:text-[13px] ">
                       Buy {item.quantity} &
-                      <span className="text-lg text-red-600 font-bold max-sm:text-[13px]">
+                      <span className="text-lg text-[#E01F00] font-bold max-sm:text-[13px]">
                         {" "}
                         Get {totalValue}%off
                       </span>
                     </span>
                   </div>
                   )}
-                  <div className=" flex-grow-0 ml-[150px] -mt-2">
+                  <div>
+                  <span className=" font-semibold text-base">
+                    <span className=" ml-1 text-lg">
+                      <span className=" ml-1">{item.freeProduct}</span>
+                    </span>
+                  </span>
+                  </div>
+                </div>
+                  <div className=" flex-grow-0 ml-[130px] -mt-1">
                     <div>
-                      <span className=" text-base text-red-600 max-sm:text-[16px] max-sm:font-semibold ">
+                      <span className=" text-xl font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold ">
                         ${totalPrice}{" "}
                       </span>
-                      <span className=" text-sm text-black-400 line-through max-sm:text-[16px] max-sm:font-semibold">
-                        $60.98{" "}
+                      <span className=" text-xl font-medium text-[#3A3A3A] line-through max-sm:text-[16px] max-sm:font-semibold">
+                        ${actualPrice}{" "}
                       </span>
                     </div>
                     <div className=" flex">
-                      <span className="text-2xl text-black font-semibold max-sm:text-[16px]  max-sm:font-bold">
+                      <span className="text-2xl text-black font-bold max-sm:text-[16px]  max-sm:font-bold">
                         {item.price}
                       </span>
-                      <p className="text-xs text-black font-semibold pt-3 max-sm:text-[5] max-sm:font-bold max-sm:pt-2">
+                      <p className="text-sm text-black font-semibold pt-2 max-sm:text-[5] max-sm:font-bold max-sm:pt-2">
                         PER UNIT
                       </p>
-                      <div className="flex">
-                        {isLastItem && (
-                          <div>
-                            <button onClick={() => setCount(count - 1)}>-</button>
-                              <span>{count}</span>
-                            <button onClick={() => setCount(count + 1)}>+</button>
-                        </div>             
-                        )}
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -444,14 +464,19 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <h2>Cart:</h2>
-                <ul>
-                  {cart.map((item) => (
-                    <li key={item.id}>
-                      {item.name} - Quantity: {item.quantity}
-                    </li>
-                  ))}
-                </ul>
+      <h2>Cart</h2>
+      {cartItems.length === 0 ? (
+        <p>Cart is empty</p>
+      ) : (
+        <ul>
+          {cartItems.map(item => (
+            <li key={item.id}>
+              {item.name} - Quantity: {item.quantity}
+              <button onClick={() => removeFromCart(item.id)}>Remove</button>
+            </li>
+          ))}
+        </ul>
+      )}
 
       {/* <div className="p-information bg-white rounded-[19px]">
         <div className="flex mb-sm-y-spacing">
