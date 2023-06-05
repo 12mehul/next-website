@@ -12,7 +12,6 @@ const AllData = gql`
         price
         freeProduct
       }
-      
     }
   }
 `;
@@ -25,13 +24,13 @@ export default function Home() {
 
   const handleBoxClick = (item) => {
     setSelectedItem(item);
-  }; 
+  };
 
   const addToCart = (product) => {
-    const existingItem = cartItems.find(item => item.id === product.id);
+    const existingItem = cartItems.find((item) => item.id === product.id);
 
     if (existingItem) {
-      const updatedCart = cartItems.map(item => {
+      const updatedCart = cartItems.map((item) => {
         if (item.id === product.id) {
           return { ...item, quantity: item.quantity + 1 };
         }
@@ -45,7 +44,7 @@ export default function Home() {
 
   // Function to remove a product from the cart
   const removeFromCart = (productId) => {
-    const updatedCart = cartItems.filter(item => item.id !== productId);
+    const updatedCart = cartItems.filter((item) => item.id !== productId);
     setCartItems(updatedCart);
   };
 
@@ -57,74 +56,73 @@ export default function Home() {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div>
-      <div className="rounded-b-2xl max-sm:w-full bg-white mb-sm-y-spacing pb-4 font-">
-        <div className="mx-auto px-sm-x-margin mb-sm-y-spacing lg:container flex justify-between px-2">
-          <div className="flex gap-2 ">
-            <div className="flex items-center gap-2 hover:underline cursor-pointer font-medium">
-              <div className="bg-light-gray p-1 rounded-full">
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 1024 1024"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M872 474H286.9l350.2-304c5.6-4.9 2.2-14-5.2-14h-88.5c-3.9 0-7.6 1.4-10.5 3.9L155 487.8a31.96 31.96 0 0 0 0 48.3L535.1 866c1.5 1.3 3.3 2 5.2 2h91.5c7.4 0 10.8-9.2 5.2-14L286.9 550H872c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z"></path>
-                </svg>
-              </div>
-              Back
-            </div>
-            <div className="border-r border-gray self-stretch"></div>
-            <p className="font-medium flex gap-2 ">
-              Category:
-              <a
-                className="underline font-medium text-blue-800"
-                href="/product-category/rack-a-ville/residential-house/residential-house-finishing/device-install-residential-house-finishing/"
+    <div className="rounded-b-2xl w-full bg-white pb-4">
+      <div className="mx-auto lg:container flex justify-between px-2">
+        <div className="flex gap-2 ">
+          <div className="flex items-center gap-2 hover:underline cursor-pointer font-medium">
+            <div className="bg-light-gray p-1 rounded-full">
+              <svg
+                stroke="currentColor"
+                fill="currentColor"
+                stroke-width="0"
+                viewBox="0 0 1024 1024"
+                height="1em"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                Home Carousel
-              </a>
-            </p>
+                <path d="M872 474H286.9l350.2-304c5.6-4.9 2.2-14-5.2-14h-88.5c-3.9 0-7.6 1.4-10.5 3.9L155 487.8a31.96 31.96 0 0 0 0 48.3L535.1 866c1.5 1.3 3.3 2 5.2 2h91.5c7.4 0 10.8-9.2 5.2-14L286.9 550H872c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z"></path>
+              </svg>
+            </div>
+            Back
           </div>
+          <div className="border-r border-gray self-stretch"></div>
+          <p className="font-medium flex gap-2 ">
+            Category:
+            <a
+              className="underline font-medium text-blue-800"
+              href="/product-category/rack-a-ville/residential-house/residential-house-finishing/device-install-residential-house-finishing/"
+            >
+              Home Carousel
+            </a>
+          </p>
         </div>
-        <div className="mx-auto mb-sm-y-spacing lg:container flex justify-end">
-          #48020
-        </div>
+      </div>
+      <div className="mx-auto mb-sm-y-spacing lg:container flex justify-end">
+        #48020
+      </div>
 
-        <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:container  ">
-          <div className="flex flex-row ">
-            <div className="basis-1/4 flex-col p-5  ">
-              <div className="flex justify-center">
-                <Image src="/arrowup.svg" width="50" height="50"></Image>
-              </div>
-              <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
-                <Image src="/tool.png" width="100" height="100"></Image>
-              </div>
-              <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
-                <Image src="/image20.jpg" width="100" height="100"></Image>
-              </div>
-              <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
-                <Image src="/image 20 (2).jpg" width="100" height="100"></Image>
-              </div>
-              <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
-                <Image src="/sddefault 1.png" width="100" height="100"></Image>
-              </div>
-              <div className="flex justify-center">
-                <Image src="/arrowdown.svg" width="50" height="50"></Image>
+      <div className=" relative w-full mx-auto grid">
+        <div className=" w-full flex flex-row">
+          <div className=" flex-col p-5  ">
+            <div className="flex justify-center">
+              <Image src="/arrowup.svg" width="50" height="50"></Image>
+            </div>
+            <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
+              <Image src="/tool.png" width="100" height="100"></Image>
+            </div>
+            <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
+              <Image src="/image20.jpg" width="100" height="100"></Image>
+            </div>
+            <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
+              <Image src="/image 20 (2).jpg" width="100" height="100"></Image>
+            </div>
+            <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
+              <Image src="/sddefault 1.png" width="100" height="100"></Image>
+            </div>
+            <div className="flex justify-center">
+              <Image src="/arrowdown.svg" width="50" height="50"></Image>
+            </div>
+          </div>
+          
+          <div className=" -ml-6">
+            <div className=" flex-col p-5 max-sm:p-3 sm:w-[300px]">
+              <div className=" box-border h-[490px] w-[480px]  p-4 border-2 flex border-black my-4 rounded-2xl pt-2 mr-10">
+                <Image src="/tool.png" width="500" height="500"></Image>
               </div>
             </div>
-            <div className="basis-1/4 -ml-6">
-              <div className="basis-1/4 flex-col p-5 max-sm:p-3 max-sm:w[300px]">
-                <div className=" box-border h-[490px] w-[480px]  p-4 border-2 flex border-black my-4 rounded-2xl pt-2 mr-10">
-                  <Image src="/tool.png" width="500" height="500"></Image>
-                </div>
-              </div>
-            </div>
           </div>
 
-          <div className=" px-2 p-5 w-full ">
+          <div className=" p-5 w-full md:ml-60 sm:ml-60">
             <div className="px-sm-x-margin  ">
               <h1 className=" font-bold text-3xl basis-full">
                 Croc's Needle Nose Wire Strippers
@@ -168,10 +166,14 @@ export default function Home() {
                   </g>
                 </svg>
                 <a className=" ml-3" href="#reviews">
-                  <p className=" font-semibold border-b border-black ">(0 Reviews)</p>
+                  <p className=" font-semibold border-b border-black ">
+                    (0 Reviews)
+                  </p>
                 </a>
                 <div className=" font-semibold text-base ml-2">|</div>
-                <p className=" font-normal text-green-600 ml-2">In Stock (20)</p>
+                <p className=" font-normal text-green-600 ml-2">
+                  In Stock (20)
+                </p>
               </div>
             </div>
             <div className="px-sm-x-margin pt-sm-y-spacing">
@@ -198,7 +200,9 @@ export default function Home() {
                     <span className="text-heading text-5xl font-bold flex-initial ">
                       $30.00
                     </span>
-                    <span className="mt-5 -ml-4 font-normal text-lg">PER UNIT</span>
+                    <span className="mt-5 -ml-4 font-normal text-lg">
+                      PER UNIT
+                    </span>
                   </div>
                 </div>
               </div>
@@ -238,49 +242,59 @@ export default function Home() {
               return (
                 <div
                   className={`box-border h-[85px] w-[500px] max-sm:w-full p-4 flex gap-5  mb-4 cursor-pointer rounded-lg 
-                ${selectedItem === item ? "bg-[#FDCE0D] border-none" : "bg-white border-2 border-[#8C8C8C]"}`}
+                ${
+                  selectedItem === item
+                    ? "bg-[#FDCE0D] border-none"
+                    : "bg-white border-2 border-[#8C8C8C]"
+                }`}
                   key={item.id}
                   onClick={() => handleBoxClick(item)}
                 >
-                <div>
-                  { isLastItem ? (
-                  <div className=" flex-grow-0 pt-1 ">
-                    <span className="text-lg text-black font-bold max-sm:text-[13px] ">
-                      Buy {lastValue} &
-                      <span className="text-lg text-[#E01F00] font-bold max-sm:text-[13px]">
-                        {" "}
-                        Get {totalValue}%off
-                      </span>
-                    </span>
-                    <div className=" flex">
-                      <button
-                        className="pb-1 w-7 h-7 bg-[#F7921D] rounded-full text-4xl font-semibold flex items-center justify-center"
-                        onClick={() => setCount(count - 1)}>-</button>
-                      <span className=" ml-3">{count}</span>
-                      <button
-                        className="ml-3 w-7 h-7 bg-[#F7921D] rounded-full text-3xl font-semibold flex items-center justify-center"
-                        onClick={() => setCount(count + 1)}>+</button>
-                    </div>  
-                  </div>
-                  ) : (
-                    <div className=" flex-grow-0 pt-1 ">
-                    <span className="text-lg text-black font-bold max-sm:text-[13px] ">
-                      Buy {item.quantity} &
-                      <span className="text-lg text-[#E01F00] font-bold max-sm:text-[13px]">
-                        {" "}
-                        Get {totalValue}%off
-                      </span>
-                    </span>
-                  </div>
-                  )}
                   <div>
-                  <span className=" font-semibold text-base">
-                    <span className=" ml-1 text-lg">
-                      <span className=" ml-1">{item.freeProduct}</span>
-                    </span>
-                  </span>
+                    {isLastItem ? (
+                      <div className=" flex-grow-0 pt-1 ">
+                        <span className="text-lg text-black font-bold max-sm:text-[13px] ">
+                          Buy {lastValue} &
+                          <span className="text-lg text-[#E01F00] font-bold max-sm:text-[13px]">
+                            {" "}
+                            Get {totalValue}%off
+                          </span>
+                        </span>
+                        <div className=" flex">
+                          <button
+                            className="pb-1 w-7 h-7 bg-[#F7921D] rounded-full text-4xl font-semibold flex items-center justify-center"
+                            onClick={() => setCount(count - 1)}
+                          >
+                            -
+                          </button>
+                          <span className=" ml-3">{count}</span>
+                          <button
+                            className="ml-3 w-7 h-7 bg-[#F7921D] rounded-full text-3xl font-semibold flex items-center justify-center"
+                            onClick={() => setCount(count + 1)}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className=" flex-grow-0 pt-1 ">
+                        <span className="text-lg text-black font-bold max-sm:text-[13px] ">
+                          Buy {item.quantity} &
+                          <span className="text-lg text-[#E01F00] font-bold max-sm:text-[13px]">
+                            {" "}
+                            Get {totalValue}%off
+                          </span>
+                        </span>
+                      </div>
+                    )}
+                    <div>
+                      <span className=" font-semibold text-base">
+                        <span className=" ml-1 text-lg">
+                          <span className=" ml-1">{item.freeProduct}</span>
+                        </span>
+                      </span>
+                    </div>
                   </div>
-                </div>
                   <div className=" flex-grow-0 ml-[130px] -mt-1">
                     <div>
                       <span className=" text-xl font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold ">
@@ -327,8 +341,8 @@ export default function Home() {
                 <p className="text-xs text-black font-semibold pt-3 max-sm:font-bold max-sm:pt-2">PER UNIT</p>
               </div>
             </div>
-          </div>
-          <div className="box-border h-[90px] w-[512px] max-sm:w-full  p-4 border flex gap-5 border-black mb-4  rounded-md">
+            </div>
+            <div className="box-border h-[90px] w-[512px] max-sm:w-full  p-4 border flex gap-5 border-black mb-4  rounded-md">
             <div className=" flex-grow-0 pt-1">
               <div>
                 <span className="text-lg text-black font-bold max-sm:text-[13px] max-sm:font-semibold">Buy 4 &
@@ -352,8 +366,8 @@ export default function Home() {
                 <p className="text-xs text-black font-semibold pt-3 max-sm:font-bold max-sm:pt-2">PER UNIT</p>
               </div>
             </div>
-          </div>
-          <div className="box-border h-[120px] w-[512px] max-sm:w-full p-4 border flex gap-5 border-black mb-4  rounded-md">
+            </div>
+            <div className="box-border h-[120px] w-[512px] max-sm:w-full p-4 border flex gap-5 border-black mb-4  rounded-md">
             <div className=" flex-grow-0 pt-2">
               <div>
                 <span className="text-lg text-black font-bold max-sm:text-[13px] ">Buy 5 &
@@ -426,10 +440,12 @@ export default function Home() {
                 <p className="text-xs text-black font-semibold pt-3 max-sm:font-bold max-sm:pt-2">PER UNIT</p>
               </div>
             </div>
-          </div> */}
+            </div> */}
             <div className="basis-full sm:order-2 box-border h-[70px] w-[517px] p-4 bg-amber-500 max-sm:w-full flex  mt-[50px] rounded-full">
-              <button className="w-full  bg-racky-orange px-8 text-xl font-body  font-extrabold rounded-full mb-sm-y-spacing"
-              onClick={() => addToCart({id: 1, name: 'Product 1'})}>
+              <button
+                className="w-full  bg-racky-orange px-8 text-xl font-body  font-extrabold rounded-full mb-sm-y-spacing"
+                onClick={() => addToCart({ id: 1, name: "Product 1" })}
+              >
                 <span className="flex justify-center items-center">
                   <svg
                     stroke="currentColor"
@@ -447,8 +463,8 @@ export default function Home() {
                 </span>
               </button>
             </div>
-            <div className="overflow-hidden transition-[max-height] relative z-0">
-              {/* <div className="px-sm-x-margin py-sm-y-spacing">
+            {/* <div className="overflow-hidden transition-[max-height] relative z-0">
+              <div className="px-sm-x-margin py-sm-y-spacing">
               <div className="Product_short_description__JDFPy">
                 <h3>Features:</h3>
                 <ul>
@@ -456,20 +472,21 @@ export default function Home() {
                   <li>Works with hole saws up to 8″.</li>
                 </ul>
               </div>
-            </div> */}
+              </div>
               <div className="absolute bottom-0">
                 <div className="relative w-full h-8 bg-gradient-to-b from-transparent to-white"></div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
+
       <h2>Cart</h2>
       {cartItems.length === 0 ? (
         <p>Cart is empty</p>
       ) : (
         <ul>
-          {cartItems.map(item => (
+          {cartItems.map((item) => (
             <li key={item.id}>
               {item.name} - Quantity: {item.quantity}
               <button onClick={() => removeFromCart(item.id)}>Remove</button>
@@ -493,7 +510,7 @@ export default function Home() {
           </h2>
         </div>
       </div> */}
-      <div className="bg-white m-2 mb-sm-y-spacing p-2 rounded-2xl lg:container lg:mx-auto  sm:mx-sm-x-margin">
+      {/* <div className="bg-white m-2 mb-sm-y-spacing p-2 rounded-2xl lg:container lg:mx-auto  sm:mx-sm-x-margin">
         <div className="w-full sm:px-sm-x-margin pt-sm-y-spacing order-3 lg:container">
           <div className="flex mb-sm-y-spacing">
             <h2 className="text-black text-2xl font-extrabold sm:text-3xl pr-4">
@@ -526,7 +543,7 @@ export default function Home() {
             </h2>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
