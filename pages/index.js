@@ -134,12 +134,6 @@ export default function Home() {
               Multi-use handheld wire strippers
             </h2>
             <div className="overflow-hidden transition-[max-height] relative z-0">
-              {/* <div className="Product_description__wwpon">
-                <p>
-                  The Driller’s Dust Bowl got upgraded! Now available the
-                  Driller’s Dust Bowl Pro equipped with a vacuum adapter.
-                </p>
-              </div> */}
               <div className="absolute bottom-0 ">
                 <div className="relative w-full h-8 bg-gradient-to-b from-transparent to-white"></div>
               </div>
@@ -182,18 +176,6 @@ export default function Home() {
           <div className="px-sm-x-margin pt-sm-y-spacing">
             <div className="flex w-full items-start flex-wrap">
               <div className="mb-sm-y-spacing sm:order-2"></div>
-              {/* <div className="flex-grow text-right sm:order-2">
-                <div className="font-medium text-green">
-                  In Stock (<span className="text-lg font-bold font-heading"
-                    >201</span
-                  >)
-                </div>
-                <div
-                  className="mx-auto mb-sm-y-spacing lg:container flex justify-end"
-                >
-                  #48020
-                </div>
-              </div> */}
               <div className="sm:order- basis-full">
                 <div className="my-6 flex gap-4">
                   <span className="text-heading text-4xl font-extrabold flex-initial ">
@@ -310,130 +292,6 @@ export default function Home() {
             );
           })}
 
-          {/* <div className="box-border h-[90px] w-[512px] max-sm:w-full p-4 border flex gap-5 border-black mb-4  rounded-md">
-            <div className=" flex-grow-0 pt-1">
-              <div>
-                <span className="text-lg text-black font-bold max-sm:text-[13px]">Buy 3 &
-                  <span className="text-lg text-red-600 font-bold max-sm:text-[13px]"> Get  15%off</span>
-                </span>
-              </div>
-              <div>
-                <span className="text-xs text-black font-semibold pt-1 ">Free |</span>
-                
-                <span className="text-xs text-black font-semibold pt-1">V- Clutter</span>
-                
-              </div>
-            </div>
-            <div className=" flex-grow-0 ml-[150px] -mt-2">
-              <div>
-              <span className=" text-base text-red-600 max-sm:text-[16px] max-sm:font-semibold ">$51.83 </span>
-              <span className=" text-sm text-black-400 line-through max-sm:text-[16px] max-sm:font-semibold">$60.98 </span>
-              </div>
-              <div className=" flex">
-                <span className="text-2xl text-black font-semibold max-sm:text-[16px]  max-sm:font-bold">$25.92</span>
-                <p className="text-xs text-black font-semibold pt-3 max-sm:font-bold max-sm:pt-2">PER UNIT</p>
-              </div>
-            </div>
-            </div>
-            <div className="box-border h-[90px] w-[512px] max-sm:w-full  p-4 border flex gap-5 border-black mb-4  rounded-md">
-            <div className=" flex-grow-0 pt-1">
-              <div>
-                <span className="text-lg text-black font-bold max-sm:text-[13px] max-sm:font-semibold">Buy 4 &
-                  <span className="text-lg text-red-600 font-bold max-sm:text-[13px]"> Get  20%off</span>
-                </span>
-              </div>
-              <div>
-                <span className="text-xs text-black font-semibold pt-1 ">Free |</span>
-                
-                <span className="text-xs text-black font-semibold pt-1">V- Clutter</span>
-                
-              </div>
-            </div>
-            <div className=" flex-grow-0 ml-[150px] -mt-2">
-              <div>
-              <span className=" text-base text-red-600 max-sm:text-[16px] max-sm:font-bold">$51.83 </span>
-              <span className=" text-sm text-black-400 line-through max-sm:text-[16px] max-sm:font-bold">$60.98 </span>
-              </div>
-              <div className=" flex">
-                <span className="text-2xl text-black font-semibold max-sm:text-[16px] max-sm:font-bold">$25.92</span>
-                <p className="text-xs text-black font-semibold pt-3 max-sm:font-bold max-sm:pt-2">PER UNIT</p>
-              </div>
-            </div>
-            </div>
-            <div className="box-border h-[120px] w-[512px] max-sm:w-full p-4 border flex gap-5 border-black mb-4  rounded-md">
-            <div className=" flex-grow-0 pt-2">
-              <div>
-                <span className="text-lg text-black font-bold max-sm:text-[13px] ">Buy 5 &
-                  <span className="text-lg text-red-600 font-bold max-sm:text-[13px]"> Get More than 25%off</span>
-                </span>
-              </div>
-              <div>
-                <span className="text-xs text-black font-semibold pt-1 ">Free |</span>
-                
-                <span className="text-xs text-black font-semibold pt-1">V- Clutter</span>
-                
-              </div>
-              <div className="flex justify-start">
-                <button
-                  className="h-5 w-5 mt-3 leading-8 text-3xl max-sm:text-[13px] rounded-full bg-light-gray  bg-yellow-400 flex items-center justify-center hover:cursor-pointer"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 20 20"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                    
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg></button
-                ><input
-                  type="text"
-                  inputmode="numeric"
-                  pattern="[0-9]+"
-                  id="quantity-undefined"
-                  name="quanitity"
-                  min="1"
-                  className="h-10 w-16 px-0 text-center border-none text-xl font-heading leading-10"
-                  value="1"
-                /><button
-                  className="h-5 w-5 mt-3 leading-8 text-3xl rounded-full bg-yellow-400 flex items-center justify-center hover:cursor-pointer"
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 20 20"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div className=" flex-grow-0 ml-[50px] -mt-2">
-              <div>
-              <span className=" text-base text-red-600 max-sm:text-[16px] max-sm:font-bold ">$51.83 </span>
-              <span className=" text-sm text-black-400 line-through max-sm:text-[16px] max-sm:font-bold">$60.98 </span>
-              </div>
-              <div className=" flex">
-                <span className="text-2xl text-black font-semibold max-sm:text-[16px] max-sm:font-bold">$25.92</span>
-                <p className="text-xs text-black font-semibold pt-3 max-sm:font-bold max-sm:pt-2">PER UNIT</p>
-              </div>
-            </div>
-            </div> */}
           <div className="basis-full sm:order-2 box-border h-[70px] w-[517px] p-4 bg-amber-500 max-sm:w-full flex  mt-[50px] rounded-full">
             <button
               className="w-full  bg-racky-orange px-8 text-xl font-body  font-extrabold rounded-full mb-sm-y-spacing"
@@ -456,20 +314,6 @@ export default function Home() {
               </span>
             </button>
           </div>
-          {/* <div className="overflow-hidden transition-[max-height] relative z-0">
-              <div className="px-sm-x-margin py-sm-y-spacing">
-              <div className="Product_short_description__JDFPy">
-                <h3>Features:</h3>
-                <ul>
-                  <li>Easy disposal of debris.</li>
-                  <li>Works with hole saws up to 8″.</li>
-                </ul>
-              </div>
-              </div>
-              <div className="absolute bottom-0">
-                <div className="relative w-full h-8 bg-gradient-to-b from-transparent to-white"></div>
-              </div>
-            </div> */}
         </div>
       </div>
 
@@ -486,56 +330,6 @@ export default function Home() {
           ))}
         </ul>
       )}
-
-      {/* <div className="p-information bg-white rounded-[19px]">
-        <div className="flex mb-sm-y-spacing">
-          <h2 className="text-black text-2xl font-extrabold sm:text-3xl pr-4">
-            Product Information
-            <div className="flex mt-1">
-              <div
-                className="border-2 border-racky-orange rounded basis-full sm:border-4"
-              ></div>
-              <div
-                className="ml-2 basis-1 border-2 border-racky-orange rounded sm:border-4"
-              ></div>
-            </div>
-          </h2>
-        </div>
-      </div> */}
-      {/* <div className="bg-white m-2 mb-sm-y-spacing p-2 rounded-2xl lg:container lg:mx-auto  sm:mx-sm-x-margin">
-        <div className="w-full sm:px-sm-x-margin pt-sm-y-spacing order-3 lg:container">
-          <div className="flex mb-sm-y-spacing">
-            <h2 className="text-black text-2xl font-extrabold sm:text-3xl pr-4">
-              Product Information
-              <div className="flex mt-1">
-                <div className="border-2 border-racky-orange rounded basis-full sm:border-4"></div>
-                <div className="ml-2 basis-1 border-2 border-racky-orange rounded sm:border-4"></div>
-              </div>
-            </h2>
-          </div>
-          <div className="flex mb-sm-y-spacing">
-            <p className="text-xl  py-3 mb-10 text-racky-orange">
-              The Croc's Needle Nose Wire Strippers have all the main features
-              of the best wire strippers plus so much more! With ergonomic
-              handles, Electricians tell us they love the feel of these wire
-              strippers. The Croc’s Needle Nose Wire Strippers are rated to cut
-              standardized American Wire Gauge (AWG) wire sizes, cuts bolts, as
-              well as strips NMD, and can even do some sleeve crimping. You can
-              also be sure to never misplace the Croc's, no matter the
-              environment, with its glow in the dark handles.
-            </p>
-          </div>
-          <div className="flex mb-sm-y-spacing">
-            <h2 className="text-black text-2xl font-extrabold sm:text-3xl pr-4 mb-8">
-              Featured Videos
-              <div className="flex mt-1">
-                <div className="border-2 border-racky-orange rounded basis-full sm:border-4"></div>
-                <div className="ml-2 basis-1 border-2 border-racky-orange rounded sm:border-4"></div>
-              </div>
-            </h2>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 }
