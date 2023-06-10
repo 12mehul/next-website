@@ -115,9 +115,9 @@ export default function Home() {
           </div>
 
           <div>
-            <div className="flex-col p-5 max-sm:p-3 sm:w-[300px]">
-              <div className=" flex box-border h-[520px] w-[490px] p-4 border-2 border-[#8C8C8C] bg-white my-4 rounded-2xl pt-2 mr-10">
-                <div className=" w-[440px] h-[440px] mx-8 my-10 ">
+            <div className="flex-col mx-12 sm:mx-0 p-5 max-sm:p-3 sm:w-[300px]">
+              <div className=" mx-10 flex box-border h-[520px] w-[490px] p-4 border-2 border-[#8C8C8C] bg-white my-4 rounded-2xl pt-2 sm:mx-0">
+                <div className=" w-[440px] h-[440px] mx-8 my-10">
                   <Image src="/tool.png" width="500" height="530"></Image>
                 </div>
               </div>
@@ -189,16 +189,22 @@ export default function Home() {
               <div className=" font-semibold text-xl">Choose How Many:</div>
             </div>
           </div>
-          <div className="flex justify-center items-center box-border h-[80px] w-[500px]  border-2 border-[#8C8C8C] my-4 rounded-lg ">
-            <p className=" text-lg font-bold">
-              Buy Croc's Needle Nose Wire Strippers
-            </p>
-            <span className="text-heading text-xl font-extrabold pl-3 text-[#E01F00]">
-              $30.00
-            </span>
-            <p className="mt-2 text-xs text-black font-semibold">PER UNIT</p>
+          <div className="flex box-border h-[100px] w-[600px] border-2 border-[#8C8C8C] my-4 p-5 rounded-lg">
+            <div className="w-14 h-16 py-2 bg-white border rounded border-[#9c9898] ">
+              <Image src="/tool.png" width="80" height="80"></Image>
+            </div>
+            <div className=" flex justify-center items-center mx-3">
+              <p className=" text-lg font-bold">
+                Buy Croc's Needle Nose Wire Strippers
+              </p>
+              <span className="text-heading text-xl font-extrabold pl-3 text-[#E01F00]">
+                $30.00
+              </span>
+              <p className="mt-2 text-xs text-black font-semibold">PER UNIT</p>
+            </div>
           </div>
-          <div className=" box-border w-[118px] p-2 bg-black ml-[360px]">
+          {data?.product?.mostPopular?.map((item) => {})}
+          <div className="box-border w-[118px] p-2 bg-black float-right mr-6">
             <p className="text-white text-base text-center font-normal">
               Most Popular
             </p>
@@ -215,7 +221,7 @@ export default function Home() {
 
             return (
               <div
-                className={`box-border h-[100px] w-[500px] max-sm:w-full px-5 p-3 flex gap-5 mb-4 cursor-pointer rounded-lg 
+                className={`box-border h-[120px] w-[600px] px-5 p-3 flex gap-4 mb-4 cursor-pointer rounded-lg 
                 ${
                   selectedItem === item
                     ? "bg-[#FDCE0D] border-none"
@@ -225,7 +231,10 @@ export default function Home() {
                 onClick={() => handleBoxClick(item)}
               >
                 <div className=" flex items-center">
-                  <div className=" flex-grow-0">
+                  <div className=" w-16 h-20 py-2 mx-1 bg-white border rounded border-[#9c9898] ">
+                    <Image src="/tool.png" width="80" height="80"></Image>
+                  </div>
+                  <div className=" flex-grow-0 mx-2">
                     <span className="text-lg text-black font-bold">
                       Buy {item.quantity} &
                       <span className="text-lg text-[#E01F00] font-bold">
@@ -259,7 +268,7 @@ export default function Home() {
                     </span>
                   </div>
                 </div>
-                <div className="flex-grow-0 ml-[130px] mt-2">
+                <div className="flex-grow-0 ml-[130px] mt-3">
                   {data?.product?.bulkDiscountEnabled ? (
                     <div>
                       <div>
@@ -280,7 +289,7 @@ export default function Home() {
                       </div>
                     </div>
                   ) : (
-                    <div className=" mt-2">
+                    <div className=" mt-3">
                       <span className="text-xl font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold">
                         ${totalPrice}{" "}
                       </span>
@@ -292,9 +301,9 @@ export default function Home() {
                 </div>
               </div>
             );
-          })}
+          })};
 
-          <div className="basis-full sm:order-2 box-border h-[70px] w-[500px] p-4 bg-[#F7921D] max-sm:w-full flex  mt-[50px] rounded-full">
+          <div className="basis-full sm:order-2 box-border h-[70px] w-[600px] p-4 bg-[#F7921D] max-sm:w-full flex mt-[50px] rounded-full">
             <button
               className="w-full  bg-racky-orange px-8 text-xl font-body  font-extrabold rounded-full mb-sm-y-spacing"
               onClick={() => addToCart({ id: 1, name: "Product 1" })}
