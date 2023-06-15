@@ -4,14 +4,15 @@ import { useState } from "react";
 
 const AllData = gql`
   query ProductBulkDiscount {
-    product(id: "cHJvZHVjdDoxMQ==") {
+    product(id: "cHJvZHVjdDoxOQ==") {
       id
       name
-      bulkDiscountEnabled
       bulkDiscountData {
         quantity
         price
         freeProduct
+        image
+        mostPopular
       }
     }
   }
@@ -19,7 +20,6 @@ const AllData = gql`
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState(null);
-  const [mostPopularItem, setMostPopularItem] = useState(null);
   const [count, setCount] = useState(5);
   const [cartItems, setCartItems] = useState([]);
   console.log(selectedItem);
@@ -203,105 +203,108 @@ export default function Home() {
               <p className="mt-2 text-xs text-black font-semibold">PER UNIT</p>
             </div>
           </div>
-          {data?.product?.mostPopular?.map((item) => {})}
-          <div className="box-border w-[118px] p-2 bg-black float-right mr-6">
-            <p className="text-white text-base text-center font-normal">
-              Most Popular
-            </p>
-          </div>
 
           {data?.product?.bulkDiscountData?.map((item, index, array) => {
             const isLastItem = index === array.length - 1;
             const discountValue = 100 - (item.price / 30) * 100;
-            const totalValue = Math.abs(discountValue);
+            const fixedValue = Math.abs(discountValue);
+            const totalValue = fixedValue.toFixed(0);
 
             const totalUnit = item.quantity * item.price;
             const totalPrice = Math.abs(totalUnit);
             const actualPrice = Math.abs(item.quantity * 30);
 
             return (
-              <div
-                className={`box-border h-[120px] w-[600px] px-5 p-3 flex gap-4 mb-4 cursor-pointer rounded-lg 
+              <div key={item.id}>
+                {item.mostPopular && (
+                  <div className="box-border w-[118px] p-2 bg-black float-right mr-6">
+                    <p className="text-white text-base text-center font-normal">
+                      Most Popular
+                    </p>
+                  </div>
+                )}
+                <div
+                  className={`box-border h-[120px] w-[600px] px-5 p-3 flex gap-4 mb-4 cursor-pointer rounded-lg 
                 ${
-                  selectedItem === item
+                  selectedItem === item || item.mostPopular
                     ? "bg-[#FDCE0D] border-none"
                     : "bg-white border-2 border-[#8C8C8C]"
-                }`}
-                key={item.id}
-                onClick={() => handleBoxClick(item)}
-              >
-                <div className=" flex items-center">
-                  <div className=" w-16 h-20 py-2 mx-1 bg-white border rounded border-[#9c9898] ">
-                    <Image src="/tool.png" width="80" height="80"></Image>
-                  </div>
-                  <div className=" flex-grow-0 mx-2">
-                    <span className="text-lg text-black font-bold">
-                      Buy {item.quantity} &
-                      <span className="text-lg text-[#E01F00] font-bold">
-                        {" "}
-                        Get {totalValue}%off
+                } `}
+                  onClick={() => handleBoxClick(item)}
+                >
+                  <div className=" flex items-center">
+                    <div className=" w-16 h-20 py-2 mx-1 bg-white border rounded border-[#9c9898] ">
+                      <Image src={item.price} width="80" height="80"></Image>
+                    </div>
+                    <div className=" flex-grow-0 mx-2">
+                      <span className="text-lg text-black font-bold">
+                        Buy {item.quantity} &
+                        <span className="text-lg text-[#E01F00] font-bold">
+                          {" "}
+                          Get {totalValue}%off
+                        </span>
                       </span>
-                    </span>
-                    {isLastItem && (
-                      <div className=" flex pt-[10px] ">
-                        <button
-                          className="pb-1 w-7 h-7 bg-[#F7921D] rounded-full text-4xl font-semibold flex items-center justify-center"
-                          onClick={() => setCount(count - 1)}
-                        >
-                          -
-                        </button>
-                        <span className=" ml-3">0{count}</span>
-                        <button
-                          className="ml-3 w-7 h-7 bg-[#F7921D] rounded-full text-3xl font-semibold flex items-center justify-center"
-                          onClick={() => setCount(count + 1)}
-                        >
-                          +
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                  <div>
-                    <span className=" font-semibold text-base">
-                      <span className=" ml-1 text-lg">
-                        <span className=" ml-1">{item.freeProduct}</span>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-                <div className="flex-grow-0 ml-[130px] mt-3">
-                  {data?.product?.bulkDiscountEnabled ? (
+                      {isLastItem && (
+                        <div className=" flex pt-[10px] ">
+                          <button
+                            className="pb-1 w-7 h-7 bg-[#F7921D] rounded-full text-4xl font-semibold flex items-center justify-center"
+                            onClick={() => setCount(count - 1)}
+                          >
+                            -
+                          </button>
+                          <span className=" ml-3">0{count}</span>
+                          <button
+                            className="ml-3 w-7 h-7 bg-[#F7921D] rounded-full text-3xl font-semibold flex items-center justify-center"
+                            onClick={() => setCount(count + 1)}
+                          >
+                            +
+                          </button>
+                        </div>
+                      )}
+                    </div>
                     <div>
+                      <span className=" font-semibold text-base">
+                        <span className=" ml-1 text-lg">
+                          <span className=" ml-1">{item.freeProduct}</span>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex-grow-0 ml-[130px] mt-3">
+                    {data?.product?.bulkDiscountEnabled ? (
                       <div>
-                        <span className="text-lg font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold">
+                        <div>
+                          <span className="text-lg font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold">
+                            ${totalPrice}{" "}
+                          </span>
+                          <span className="text-lg font-medium text-[#3A3A3A] line-through max-sm:text-[16px] max-sm:font-semibold">
+                            ${actualPrice}{" "}
+                          </span>
+                        </div>
+                        <div className="flex">
+                          <span className="text-xl text-black font-bold max-sm:text-[16px] max-sm:font-bold">
+                            {item.price}
+                          </span>
+                          <p className="text-sm text-black font-semibold pl-1 pt-[6px]">
+                            PER UNIT
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className=" mt-3">
+                        <span className="text-xl font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold">
                           ${totalPrice}{" "}
                         </span>
                         <span className="text-lg font-medium text-[#3A3A3A] line-through max-sm:text-[16px] max-sm:font-semibold">
                           ${actualPrice}{" "}
                         </span>
                       </div>
-                      <div className="flex">
-                        <span className="text-xl text-black font-bold max-sm:text-[16px] max-sm:font-bold">
-                          {item.price}
-                        </span>
-                        <p className="text-sm text-black font-semibold pl-1 pt-[6px]">
-                          PER UNIT
-                        </p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className=" mt-3">
-                      <span className="text-xl font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold">
-                        ${totalPrice}{" "}
-                      </span>
-                      <span className="text-lg font-medium text-[#3A3A3A] line-through max-sm:text-[16px] max-sm:font-semibold">
-                        ${actualPrice}{" "}
-                      </span>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
             );
-          })};
+          })}
 
           <div className="basis-full sm:order-2 box-border h-[70px] w-[600px] p-4 bg-[#F7921D] max-sm:w-full flex mt-[50px] rounded-full">
             <button
