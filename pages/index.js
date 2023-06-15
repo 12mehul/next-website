@@ -21,11 +21,16 @@ const AllData = gql`
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [count, setCount] = useState(5);
+  const [selectedImage, setSelectedImage] = useState("/tool.png");
   const [cartItems, setCartItems] = useState([]);
   console.log(selectedItem);
 
   const handleBoxClick = (item) => {
     setSelectedItem(item);
+  };
+
+  const handleImageClick = (imageUrl) => {
+    setSelectedImage(imageUrl);
   };
 
   const addToCart = (product) => {
@@ -97,16 +102,28 @@ export default function Home() {
             <div className="hidden justify-center md:flex">
               <Image src="/arrowup.svg" width="40" height="40"></Image>
             </div>
-            <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
+            <div
+              className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2 cursor-pointer"
+              onClick={() => handleImageClick("/tool.png")}
+            >
               <Image src="/tool.png" width="100" height="100"></Image>
             </div>
-            <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
+            <div
+              className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2 cursor-pointer"
+              onClick={() => handleImageClick("/image20.jpg")}
+            >
               <Image src="/image20.jpg" width="100" height="100"></Image>
             </div>
-            <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
+            <div
+              className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2 cursor-pointer"
+              onClick={() => handleImageClick("/image 20 (2).jpg")}
+            >
               <Image src="/image 20 (2).jpg" width="100" height="100"></Image>
             </div>
-            <div className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2">
+            <div
+              className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2 cursor-pointer"
+              onClick={() => handleImageClick("/sddefault 1.png")}
+            >
               <Image src="/sddefault 1.png" width="100" height="100"></Image>
             </div>
             <div className="hidden justify-center md:flex">
@@ -118,7 +135,7 @@ export default function Home() {
             <div className="flex-col p-5 max-sm:p-3 sm:w-[300px]">
               <div className=" flex box-border h-[520px] w-[490px] p-4 border-2 border-[#8C8C8C] bg-white my-4 rounded-2xl pt-2 mr-10">
                 <div className=" w-[440px] h-[440px] mx-8 my-10 ">
-                  <Image src="/tool.png" width="500" height="530"></Image>
+                  <Image src={selectedImage} width="500" height="530"></Image>
                 </div>
               </div>
             </div>
