@@ -19,9 +19,15 @@ const AllData = gql`
 `;
 
 export default function Home() {
+  const images = [
+    "/tool.png",
+    "/image20.jpg",
+    "/image 20 (2).jpg",
+    "/sddefault 1.png",
+  ];
   const [selectedItem, setSelectedItem] = useState(null);
   const [count, setCount] = useState(5);
-  const [selectedImage, setSelectedImage] = useState("/tool.png");
+  const [selectedImage, setSelectedImage] = useState(images[0]);
   const [cartItems, setCartItems] = useState([]);
   console.log(selectedItem);
 
@@ -31,6 +37,19 @@ export default function Home() {
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
+  };
+
+  const handleArrowClick = (direction) => {
+    const currentIndex = images.indexOf(selectedImage);
+    let newIndex;
+
+    if (direction === "prev") {
+      newIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+    } else if (direction === "next") {
+      newIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
+    }
+
+    setSelectedImage(images[newIndex]);
   };
 
   const addToCart = (product) => {
@@ -99,16 +118,25 @@ export default function Home() {
       <div className="flex flex-col md:flex-row mx-auto">
         <div className="flex flex-col-reverse mt-0 md:flex-row mx-auto">
           <div className="flex p-4 gap-6 mt-4 md:gap-0 md:flex-col mx-auto">
-            <div className="hidden justify-center md:flex">
+            <div
+              className="hidden justify-center cursor-pointer md:flex"
+              onClick={() => handleArrowClick("prev")}
+            >
               <Image src="/arrowup.svg" width="40" height="40"></Image>
             </div>
-            <div
-              className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2 cursor-pointer"
-              onClick={() => handleImageClick("/tool.png")}
-            >
-              <Image src="/tool.png" width="100" height="100"></Image>
-            </div>
-            <div
+            {images?.map((image, index) => (
+              <div
+                key={index}
+                className={`box-border h-[92px] w-[92px] p-4 border-2 flex my-4 rounded-3xl pt-2 cursor-pointer
+              ${
+                selectedImage === image ? "border-blue-500" : "border-[#8C8C8C]"
+              }`}
+                onClick={() => handleImageClick(image)}
+              >
+                <Image src={image} width="100" height="100"></Image>
+              </div>
+            ))}
+            {/* <div
               className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2 cursor-pointer"
               onClick={() => handleImageClick("/image20.jpg")}
             >
@@ -125,8 +153,11 @@ export default function Home() {
               onClick={() => handleImageClick("/sddefault 1.png")}
             >
               <Image src="/sddefault 1.png" width="100" height="100"></Image>
-            </div>
-            <div className="hidden justify-center md:flex">
+            </div> */}
+            <div
+              className="hidden justify-center cursor-pointer md:flex"
+              onClick={() => handleArrowClick("next")}
+            >
               <Image src="/arrowdown.svg" width="40" height="40"></Image>
             </div>
           </div>
