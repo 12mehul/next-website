@@ -116,7 +116,7 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col md:flex-row mx-auto">
-        <div className="flex flex-col-reverse mt-0 md:flex-row mx-auto">
+        <div className="flex flex-col-reverse my-auto mt-0 md:flex-row mx-auto">
           <div className="flex p-4 gap-6 mt-4 md:gap-0 md:flex-col mx-auto">
             <div
               className="hidden justify-center cursor-pointer md:flex"
@@ -145,8 +145,8 @@ export default function Home() {
           </div>
 
           <div>
-            <div className="flex-col p-5 max-sm:p-3 sm:w-[300px]">
-              <div className=" flex box-border h-[520px] w-[490px] p-4 border-2 border-[#8C8C8C] bg-white my-4 rounded-2xl pt-2 mr-10">
+            <div className="flex-col p-5 md:w-[520px] mx-auto">
+              <div className=" flex box-border h-[520px] w-[490px] p-4 border-2 border-[#8C8C8C] bg-white my-4 rounded-2xl pt-2 sm:mx-0">
                 <div className=" w-[440px] h-[440px] mx-8 my-10 ">
                   <Image src={selectedImage} width="500" height="530"></Image>
                 </div>
@@ -155,9 +155,9 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="p-5 mt-3 md:ml-60 mx-auto">
-          <div className="px-sm-x-margin  ">
-            <h1 className=" font-bold text-3xl basis-full">
+        <div className="p-5 mt-5 mx-auto">
+          <div className="px-sm-x-margin mx-auto ">
+            <h1 className=" font-extrabold text-3xl basis-full">
               Croc's Needle Nose Wire Strippers
             </h1>
             <h2 className=" font-semibold text-xl mt-2 ">
@@ -219,7 +219,7 @@ export default function Home() {
               <div className=" font-semibold text-xl">Choose How Many:</div>
             </div>
           </div>
-          <div className="flex justify-center items-center box-border h-[80px] w-[500px]  border-2 border-[#8C8C8C] my-4 rounded-md">
+          <div className="flex justify-center items-center box-border h-[67px] w-[517px]  border-2 border-[#8C8C8C] my-4 rounded-md">
             <p className=" text-lg font-bold">
               Buy Croc's Needle Nose Wire Strippers
             </p>
@@ -245,14 +245,14 @@ export default function Home() {
             return (
               <div key={item.id}>
                 {item.mostPopular && (
-                  <div className=" box-border w-[118px] p-1 bg-black ml-[360px]">
-                    <p className="text-white text-base text-center font-normal">
+                  <div className=" box-border h-[22px] w-[113px] bg-black ml-[380px]">
+                    <p className="text-white text-sm text-center font-normal">
                       Most Popular
                     </p>
                   </div>
                 )}
                 <div
-                  className={`box-border w-[500px] max-sm:w-full px-5 p-3 flex gap-5 mb-4 cursor-pointer rounded-md 
+                  className={`box-border w-[517px] max-sm:w-full px-5 p-3 flex gap-5 mb-4 cursor-pointer rounded-md 
                 ${
                   isSelected
                     ? "bg-[#FDCE0D] border-none"
@@ -260,7 +260,7 @@ export default function Home() {
                     ? "bg-[#FDCE0D] border-none"
                     : "bg-white border-2 border-[#8C8C8C]"
                 }
-                ${isLastItem ? "h-[120px]" : "h-[100px]"}`}
+                ${isLastItem ? "h-[120px]" : "h-[80px]"}`}
                   key={item.id}
                   onClick={() => handleBoxClick(item)}
                 >
@@ -276,14 +276,14 @@ export default function Home() {
                       {isLastItem && (
                         <div className=" flex pt-[10px] ">
                           <button
-                            className="pb-1 w-7 h-7 bg-[#F7921D] rounded-full text-4xl font-semibold flex items-center justify-center"
+                            className="pb-1 w-7 h-7 bg-[#F7921D] rounded-full text-2xl font-semibold flex items-center justify-center"
                             onClick={() => setCount(count - 1)}
                           >
                             -
                           </button>
                           <span className=" ml-3">0{count}</span>
                           <button
-                            className="ml-3 w-7 h-7 bg-[#F7921D] rounded-full text-3xl font-semibold flex items-center justify-center"
+                            className="ml-3 w-7 h-7 bg-[#F7921D] rounded-full text-2xl font-semibold flex items-center justify-center"
                             onClick={() => setCount(count + 1)}
                           >
                             +
@@ -299,19 +299,19 @@ export default function Home() {
                       </span>
                     </div>
                   </div>
-                  <div className="flex-grow-0 ml-[130px] mt-2">
+                  <div className="flex-grow-0 ml-[160px] mt-0">
                     {data?.product?.bulkDiscountEnabled ? (
                       <div>
                         <div>
-                          <span className="text-lg font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold">
+                          <span className="text-base font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold">
                             ${totalPrice}{" "}
                           </span>
-                          <span className="text-lg font-medium text-[#3A3A3A] line-through max-sm:text-[16px] max-sm:font-semibold">
+                          <span className="text-base font-medium text-[#3A3A3A] line-through max-sm:text-[16px] max-sm:font-semibold">
                             ${actualPrice}{" "}
                           </span>
                         </div>
                         <div className="flex">
-                          <span className="text-xl text-black font-bold max-sm:text-[16px] max-sm:font-bold">
+                          <span className="text-xl text-black font-extrabold max-sm:text-[16px] max-sm:font-bold">
                             {item.price}
                           </span>
                           <p className="text-sm text-black font-semibold pl-1 pt-[6px]">
@@ -320,7 +320,7 @@ export default function Home() {
                         </div>
                       </div>
                     ) : (
-                      <div className=" mt-2">
+                      <div className=" mt-1">
                         <span className="text-xl font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold">
                           ${totalPrice}{" "}
                         </span>
@@ -335,7 +335,7 @@ export default function Home() {
             );
           })}
 
-          <div className="basis-full sm:order-2 box-border h-[70px] w-[500px] p-4 bg-[#F7921D] max-sm:w-full flex  mt-[50px] rounded-full">
+          <div className="basis-full sm:order-2 box-border h-[70px] w-[517px] p-4 bg-[#F7921D] max-sm:w-full flex  mt-[50px] rounded-full">
             <button
               className="w-full  bg-racky-orange px-8 text-xl font-body  font-extrabold rounded-full mb-sm-y-spacing"
               onClick={() => addToCart({ id: 1, name: "Product 1" })}
