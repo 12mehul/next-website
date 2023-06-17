@@ -136,24 +136,6 @@ export default function Home() {
                 <Image src={image} width="100" height="100"></Image>
               </div>
             ))}
-            {/* <div
-              className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2 cursor-pointer"
-              onClick={() => handleImageClick("/image20.jpg")}
-            >
-              <Image src="/image20.jpg" width="100" height="100"></Image>
-            </div>
-            <div
-              className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2 cursor-pointer"
-              onClick={() => handleImageClick("/image 20 (2).jpg")}
-            >
-              <Image src="/image 20 (2).jpg" width="100" height="100"></Image>
-            </div>
-            <div
-              className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2 cursor-pointer"
-              onClick={() => handleImageClick("/sddefault 1.png")}
-            >
-              <Image src="/sddefault 1.png" width="100" height="100"></Image>
-            </div> */}
             <div
               className="hidden justify-center cursor-pointer md:flex"
               onClick={() => handleArrowClick("next")}
@@ -237,8 +219,8 @@ export default function Home() {
               <div className=" font-semibold text-xl">Choose How Many:</div>
             </div>
           </div>
-          <div className="flex box-border h-[100px] w-[600px] border-2 border-[#8C8C8C] my-4 p-5 rounded-lg">
-            <div className="w-14 h-16 py-2 bg-white border rounded border-[#9c9898] ">
+          <div className="flex box-border h-[80px] w-[600px] border-2 border-[#8C8C8C] my-4 p-2 rounded-md">
+            <div className="w-12 h-16 py-2 bg-white border rounded border-[#9c9898] ">
               <Image src="/tool.png" width="80" height="80"></Image>
             </div>
             <div className=" flex justify-center items-center mx-3">
@@ -262,27 +244,34 @@ export default function Home() {
             const totalPrice = Math.abs(totalUnit);
             const actualPrice = Math.abs(item.quantity * 30);
 
+            const isSelected = selectedItem === item;
+            const isMostPopular =
+              item.mostPopular && (!selectedItem || selectedItem === item);
+
             return (
               <div key={item.id}>
                 {item.mostPopular && (
-                  <div className="box-border w-[118px] p-2 bg-black float-right mr-6">
+                  <div className="box-border w-[118px] p-1 bg-black float-right mr-6">
                     <p className="text-white text-base text-center font-normal">
                       Most Popular
                     </p>
                   </div>
                 )}
                 <div
-                  className={`box-border h-[120px] w-[600px] px-5 p-3 flex gap-4 mb-4 cursor-pointer rounded-lg 
+                  className={`box-border w-[600px] px-5 p-3 flex gap-4 mb-4 cursor-pointer rounded-md 
                 ${
-                  selectedItem === item || item.mostPopular
+                  isSelected
+                    ? "bg-[#FDCE0D] border-none"
+                    : isMostPopular
                     ? "bg-[#FDCE0D] border-none"
                     : "bg-white border-2 border-[#8C8C8C]"
-                } `}
+                }
+                ${isLastItem ? "h-[120px]" : "h-[100px]"} `}
                   onClick={() => handleBoxClick(item)}
                 >
                   <div className=" flex items-center">
-                    <div className=" w-16 h-20 py-2 mx-1 bg-white border rounded border-[#9c9898] ">
-                      <Image src={item.price} width="80" height="80"></Image>
+                    <div className=" w-12 h-16 py-2 bg-white border rounded border-[#9c9898] ">
+                      <Image src={item.image} width="80" height="80"></Image>
                     </div>
                     <div className=" flex-grow-0 mx-2">
                       <span className="text-lg text-black font-bold">

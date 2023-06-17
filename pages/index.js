@@ -136,24 +136,6 @@ export default function Home() {
                 <Image src={image} width="100" height="100"></Image>
               </div>
             ))}
-            {/* <div
-              className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2 cursor-pointer"
-              onClick={() => handleImageClick("/image20.jpg")}
-            >
-              <Image src="/image20.jpg" width="100" height="100"></Image>
-            </div>
-            <div
-              className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2 cursor-pointer"
-              onClick={() => handleImageClick("/image 20 (2).jpg")}
-            >
-              <Image src="/image 20 (2).jpg" width="100" height="100"></Image>
-            </div>
-            <div
-              className=" box-border h-[92px] w-[92px] p-4 border-2 flex border-[#8C8C8C] my-4 rounded-3xl pt-2 cursor-pointer"
-              onClick={() => handleImageClick("/sddefault 1.png")}
-            >
-              <Image src="/sddefault 1.png" width="100" height="100"></Image>
-            </div> */}
             <div
               className="hidden justify-center cursor-pointer md:flex"
               onClick={() => handleArrowClick("next")}
@@ -237,7 +219,7 @@ export default function Home() {
               <div className=" font-semibold text-xl">Choose How Many:</div>
             </div>
           </div>
-          <div className="flex justify-center items-center box-border h-[80px] w-[500px]  border-2 border-[#8C8C8C] my-4 rounded-lg ">
+          <div className="flex justify-center items-center box-border h-[80px] w-[500px]  border-2 border-[#8C8C8C] my-4 rounded-md">
             <p className=" text-lg font-bold">
               Buy Croc's Needle Nose Wire Strippers
             </p>
@@ -256,22 +238,29 @@ export default function Home() {
             const totalPrice = Math.abs(totalUnit);
             const actualPrice = Math.abs(item.quantity * 30);
 
+            const isSelected = selectedItem === item;
+            const isMostPopular =
+              item.mostPopular && (!selectedItem || selectedItem === item);
+
             return (
               <div key={item.id}>
                 {item.mostPopular && (
-                  <div className=" box-border w-[118px] p-2 bg-black ml-[360px]">
+                  <div className=" box-border w-[118px] p-1 bg-black ml-[360px]">
                     <p className="text-white text-base text-center font-normal">
                       Most Popular
                     </p>
                   </div>
                 )}
                 <div
-                  className={`box-border h-[100px] w-[500px] max-sm:w-full px-5 p-3 flex gap-5 mb-4 cursor-pointer rounded-lg 
+                  className={`box-border w-[500px] max-sm:w-full px-5 p-3 flex gap-5 mb-4 cursor-pointer rounded-md 
                 ${
-                  selectedItem === item || item.mostPopular
+                  isSelected
+                    ? "bg-[#FDCE0D] border-none"
+                    : isMostPopular
                     ? "bg-[#FDCE0D] border-none"
                     : "bg-white border-2 border-[#8C8C8C]"
-                }`}
+                }
+                ${isLastItem ? "h-[120px]" : "h-[100px]"}`}
                   key={item.id}
                   onClick={() => handleBoxClick(item)}
                 >
