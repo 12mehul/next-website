@@ -116,7 +116,7 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col md:flex-row mx-auto">
-        <div className="flex flex-col-reverse mt-0 md:flex-row mx-auto">
+        <div className="flex flex-col-reverse mt-0 my-auto md:flex-row mx-auto">
           <div className="flex p-4 gap-6 mt-4 md:gap-0 md:flex-col mx-auto">
             <div
               className="hidden justify-center cursor-pointer md:flex"
@@ -127,7 +127,7 @@ export default function Home() {
             {images?.map((image, index) => (
               <div
                 key={index}
-                className={`box-border h-[92px] w-[92px] p-4 border-2 flex my-4 rounded-3xl pt-2 cursor-pointer
+                className={`box-border h-[92px] w-[92px] p-4 border-2 flex my-auto rounded-3xl cursor-pointer
               ${
                 selectedImage === image ? "border-blue-500" : "border-[#8C8C8C]"
               }`}
@@ -144,20 +144,20 @@ export default function Home() {
             </div>
           </div>
 
-          <div>
-            <div className="flex-col p-5 md:w-[520px] mx-auto">
-              <div className=" mx-10 flex box-border h-[520px] w-[490px] p-4 border-2 border-[#8C8C8C] bg-white my-4 rounded-2xl pt-2 sm:mx-0">
-                <div className=" w-[440px] h-[440px] mx-8 my-10">
+        
+            <div className="flex-col p-5 mx-auto">
+              <div className=" mx-10 flex box-border h-[520px] w-[490px] p-4 border-2 border-[#8C8C8C] bg-white my-4 rounded-3xl pt-2 sm:mx-0">
+                <div className=" w-[440px] h-[440px] mx-auto my-auto">
                   <Image src={selectedImage} width="500" height="530"></Image>
                 </div>
               </div>
             </div>
-          </div>
+          
         </div>
 
         <div className="p-5 mt-5 mx-auto">
           <div className="px-sm-x-margin mx-auto ">
-            <h1 className=" font-extrabold text-3xl basis-full">
+            <h1 className=" font-extrabold text-2xl basis-full">
               Croc's Needle Nose Wire Strippers
             </h1>
             <h2 className=" font-semibold text-xl mt-2 ">
