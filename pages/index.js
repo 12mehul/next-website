@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const AllData = gql`
   query ProductBulkDiscount {
-    product(id: "cHJvZHVjdDoxMQ==") {
+    product(id: "cHJvZHVjdDoxOQ==") {
       id
       name
       bulkDiscountEnabled
@@ -12,6 +12,7 @@ const AllData = gql`
         quantity
         price
         freeProduct
+        image
         mostPopular
       }
     }
@@ -19,6 +20,14 @@ const AllData = gql`
 `;
 
 export default function Home() {
+  const products = [
+    {
+      name: "Croc's Needle Nose Wire Strippers",
+      price: "$30.00",
+      image: "/tool.png",
+    },
+  ];
+
   const images = [
     "/tool.png",
     "/image20.jpg",
@@ -217,40 +226,59 @@ export default function Home() {
               <div className=" font-semibold text-xl">Choose How Many:</div>
             </div>
           </div>
-          <div className="flex justify-center items-center box-border h-[67px] w-[517px]  border-2 border-[#8C8C8C] my-4 rounded-md">
-            <p className=" text-lg font-bold">
-              Buy Croc's Needle Nose Wire Strippers
-            </p>
-            <span className="text-heading text-xl font-extrabold pl-3 text-[#E01F00]">
-              $30.00
-            </span>
-            <p className="mt-2 text-xs text-black font-semibold">PER UNIT</p>
-          </div>
-
-          {data?.product?.bulkDiscountData?.map((item, index, array) => {
-            const isLastItem = index === array.length - 1;
-            const discountValue = 100 - (item.price / 30) * 100;
-            const totalValue = Math.abs(discountValue);
-
-            const totalUnit = item.quantity * item.price;
-            const totalPrice = Math.abs(totalUnit);
-            const actualPrice = Math.abs(item.quantity * 30);
-
-            const isSelected = selectedItem === item;
-            const isMostPopular =
-              item.mostPopular && (!selectedItem || selectedItem === item);
-
-            return (
-              <div key={item.id}>
-                {item.mostPopular && (
-                  <div className=" box-border h-[22px] w-[113px] bg-black ml-[380px]">
-                    <p className="text-white text-sm text-center font-normal">
-                      Most Popular
+          <div>
+            {products?.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className={`flex box-border h-[67px] w-[517px] my-4 rounded-md cursor-pointer
+            ${
+              selectedItem === item
+                ? "bg-[#FDCE0D] border-none"
+                : "bg-white border-2 border-[#8C8C8C]"
+            }`}
+                  onClick={() => handleBoxClick(item)}
+                >
+                  <div className="w-12 h-14 py-2 my-auto ml-2 bg-white border rounded border-[#9c9898] ">
+                    <Image src={item.image} width="80" height="80"></Image>
+                  </div>
+                  <div className=" flex justify-center items-center mx-1">
+                    <p className=" text-base font-bold">{item.name}</p>
+                    <span className="text-heading text-xl font-extrabold pl-3 text-[#E01F00]">
+                      {item.price}
+                    </span>
+                    <p className="mt-2 text-xs text-black font-semibold">
+                      PER UNIT
                     </p>
                   </div>
-                )}
-                <div
-                  className={`box-border w-[517px] max-sm:w-full px-5 p-3 flex gap-5 mb-4 cursor-pointer rounded-md 
+                </div>
+              );
+            })}
+            {data?.product?.bulkDiscountData?.map((item, index, array) => {
+              const isLastItem = index === array.length - 1;
+              const discountValue = 100 - (item.price / 30) * 100;
+              const fixedValue = Math.abs(discountValue);
+              const totalValue = fixedValue.toFixed(0);
+
+              const totalUnit = item.quantity * item.price;
+              const totalPrice = Math.abs(totalUnit);
+              const actualPrice = Math.abs(item.quantity * 30);
+
+              const isSelected = selectedItem === item;
+              const isMostPopular =
+                item.mostPopular && (!selectedItem || selectedItem === item);
+
+              return (
+                <div key={item.id}>
+                  {item.mostPopular && (
+                    <div className=" box-border h-[22px] w-[113px] bg-black ml-[380px]">
+                      <p className="text-white text-sm text-center font-normal">
+                        Most Popular
+                      </p>
+                    </div>
+                  )}
+                  <div
+                    className={`box-border w-[517px] p-3 flex gap-5 mb-4 cursor-pointer rounded-md 
                 ${
                   isSelected
                     ? "bg-[#FDCE0D] border-none"
@@ -259,79 +287,95 @@ export default function Home() {
                     : "bg-white border-2 border-[#8C8C8C]"
                 }
                 ${isLastItem ? "h-[120px]" : "h-[80px]"}`}
-                  key={item.id}
-                  onClick={() => handleBoxClick(item)}
-                >
-                  <div className=" flex items-center">
-                    <div className=" flex-grow-0">
-                      <span className="text-lg text-black font-bold">
-                        Buy {item.quantity} &
-                        <span className="text-lg text-[#E01F00] font-bold">
-                          {" "}
-                          Get {totalValue}%off
-                        </span>
-                      </span>
-                      {isLastItem && (
-                        <div className=" flex pt-[10px] ">
-                          <button
-                            className="pb-1 w-7 h-7 bg-[#F7921D] rounded-full text-2xl font-semibold flex items-center justify-center"
-                            onClick={() => setCount(count - 1)}
-                          >
-                            -
-                          </button>
-                          <span className=" ml-3">0{count}</span>
-                          <button
-                            className="ml-3 w-7 h-7 bg-[#F7921D] rounded-full text-2xl font-semibold flex items-center justify-center"
-                            onClick={() => setCount(count + 1)}
-                          >
-                            +
-                          </button>
+                    key={item.id}
+                    onClick={() => handleBoxClick(item)}
+                  >
+                    <div className=" flex flex-row gap-4">
+                      {item.image ? (
+                        <div className=" w-12 h-14 py-2 bg-white border rounded border-[#9c9898]">
+                          <Image
+                            src={item.image}
+                            width="80"
+                            height="80"
+                          ></Image>
                         </div>
-                      )}
-                    </div>
-                    <div>
-                      <span className=" font-semibold text-base">
-                        <span className=" ml-1 text-lg">
-                          <span className=" ml-1">{item.freeProduct}</span>
+                      ) : null}
+                      <div className=" my-auto">
+                        <span className="text-lg text-black font-bold">
+                          Buy {item.quantity} &
+                          <span className="text-lg text-[#E01F00] font-bold">
+                            {" "}
+                            Get {totalValue}%off
+                          </span>
                         </span>
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex-grow-0 ml-[160px] mt-0">
-                    {data?.product?.bulkDiscountEnabled ? (
-                      <div>
                         <div>
-                          <span className="text-base font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold">
-                            ${totalPrice}{" "}
-                          </span>
-                          <span className="text-base font-medium text-[#3A3A3A] line-through max-sm:text-[16px] max-sm:font-semibold">
-                            ${actualPrice}{" "}
+                          <span className=" font-medium text-sm">
+                            <span>
+                              Free
+                              <span className="ml-1">|</span>
+                              <span className="ml-1">{item.freeProduct}</span>
+                            </span>
                           </span>
                         </div>
-                        <div className="flex">
-                          <span className="text-xl text-black font-extrabold max-sm:text-[16px] max-sm:font-bold">
-                            {item.price}
-                          </span>
-                          <p className="text-sm text-black font-semibold pl-1 pt-[6px]">
-                            PER UNIT
-                          </p>
-                        </div>
+                        {isLastItem && (
+                          <div className=" flex pt-2">
+                            <button
+                              className="pb-1 w-7 h-7 bg-[#F7921D] rounded-full text-2xl font-semibold flex items-center justify-center"
+                              onClick={() => setCount(count - 1)}
+                            >
+                              -
+                            </button>
+                            <span className=" ml-3">
+                              {count < 10 ? "0" : ""}
+                              {count}
+                            </span>
+                            <button
+                              className="ml-3 w-7 h-7 bg-[#F7921D] rounded-full text-2xl font-semibold flex items-center justify-center"
+                              onClick={() => setCount(count + 1)}
+                            >
+                              +
+                            </button>
+                          </div>
+                        )}
                       </div>
-                    ) : (
-                      <div className=" mt-1">
-                        <span className="text-xl font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold">
-                          ${totalPrice}{" "}
-                        </span>
-                        <span className="text-lg font-medium text-[#3A3A3A] line-through max-sm:text-[16px] max-sm:font-semibold">
-                          ${actualPrice}{" "}
-                        </span>
+                      <div className="w-28 sm:w-24"></div>
+                      <div className="flex mt-1">
+                        {data?.product?.bulkDiscountEnabled ? (
+                          <div>
+                            <div>
+                              <span className="text-base font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold">
+                                ${totalPrice}{" "}
+                              </span>
+                              <span className="text-base font-medium text-[#3A3A3A] line-through max-sm:text-[16px] max-sm:font-semibold">
+                                ${actualPrice}{" "}
+                              </span>
+                            </div>
+                            <div className="flex">
+                              <span className="text-xl text-black font-extrabold max-sm:text-[16px] max-sm:font-bold">
+                                ${item.price}
+                              </span>
+                              <p className="text-sm text-black font-semibold pl-1 pt-[6px]">
+                                PER UNIT
+                              </p>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className=" mt-1">
+                            <span className="text-xl font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold">
+                              ${totalPrice}{" "}
+                            </span>
+                            <span className="text-lg font-medium text-[#3A3A3A] line-through max-sm:text-[16px] max-sm:font-semibold">
+                              ${actualPrice}{" "}
+                            </span>
+                          </div>
+                        )}
                       </div>
-                    )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
 
           <div className="basis-full sm:order-2 box-border h-[70px] w-[517px] p-4 bg-[#F7921D] max-sm:w-full flex  mt-[50px] rounded-full">
             <button
