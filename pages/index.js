@@ -290,55 +290,61 @@ export default function Home() {
                     key={item.id}
                     onClick={() => handleBoxClick(item)}
                   >
-                    <div className=" flex flex-row gap-4">
-                      {item.image ? (
-                        <div className=" w-12 h-14 py-2 bg-white border rounded border-[#9c9898]">
-                          <Image
-                            src={item.image}
-                            width="80"
-                            height="80"
-                          ></Image>
-                        </div>
-                      ) : null}
-                      <div className=" my-auto">
-                        <span className="text-lg text-black font-bold">
-                          Buy {item.quantity} &
-                          <span className="text-lg text-[#E01F00] font-bold">
-                            {" "}
-                            Get {totalValue}%off
-                          </span>
-                        </span>
-                        <div>
-                          <span className=" font-medium text-sm">
-                            <span>
-                              Free
-                              <span className="ml-1">|</span>
-                              <span className="ml-1">{item.freeProduct}</span>
-                            </span>
-                          </span>
-                        </div>
-                        {isLastItem && (
-                          <div className=" flex pt-2">
-                            <button
-                              className="pb-1 w-7 h-7 bg-[#F7921D] rounded-full text-2xl font-semibold flex items-center justify-center"
-                              onClick={() => setCount(count - 1)}
-                            >
-                              -
-                            </button>
-                            <span className=" ml-3">
-                              {count < 10 ? "0" : ""}
-                              {count}
-                            </span>
-                            <button
-                              className="ml-3 w-7 h-7 bg-[#F7921D] rounded-full text-2xl font-semibold flex items-center justify-center"
-                              onClick={() => setCount(count + 1)}
-                            >
-                              +
-                            </button>
+                    <div className=" flex">
+                      <div className="flex gap-2">
+                        {item.image ? (
+                          <div className=" w-12 h-14 py-2 bg-white border rounded border-[#9c9898]">
+                            <Image
+                              src={item.image}
+                              width="80"
+                              height="80"
+                            ></Image>
                           </div>
-                        )}
+                        ) : null}
+                        <div className=" my-auto">
+                          <span className="text-lg text-black font-bold">
+                            Buy {item.quantity} &
+                            <span className="text-lg text-[#E01F00] font-bold">
+                              {" "}
+                              Get {totalValue}%off
+                            </span>
+                          </span>
+                          <div>
+                            <span className=" font-medium text-sm">
+                              <span>
+                                Free
+                                <span className="ml-1">|</span>
+                                <span className="ml-1">{item.freeProduct}</span>
+                              </span>
+                            </span>
+                          </div>
+                          {isLastItem && (
+                            <div className=" flex pt-2">
+                              <button
+                                className="pb-1 w-7 h-7 bg-[#F7921D] rounded-full text-2xl font-semibold flex items-center justify-center"
+                                onClick={() => setCount(count - 1)}
+                              >
+                                -
+                              </button>
+                              <span className=" ml-3">
+                                {count < 10 ? "0" : ""}
+                                {count}
+                              </span>
+                              <button
+                                className="ml-3 w-7 h-7 bg-[#F7921D] rounded-full text-2xl font-semibold flex items-center justify-center"
+                                onClick={() => setCount(count + 1)}
+                              >
+                                +
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       </div>
-                      <div className="w-28 sm:w-24"></div>
+                      <div
+                        className={`${
+                          item.image ? "min-w-[150px]" : "min-w-[210px]"
+                        }`}
+                      ></div>
                       <div className="flex mt-1">
                         {data?.product?.bulkDiscountEnabled ? (
                           <div>
