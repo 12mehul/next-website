@@ -11,7 +11,10 @@ const AllData = gql`
       bulkDiscountData {
         quantity
         price
-        freeProduct
+        freeProduct {
+          id
+          name
+        }
         image
         mostPopular
       }
@@ -35,12 +38,14 @@ export default function Home() {
     "/sddefault 1.png",
   ];
   const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedTotalValue, setSelectedTotalValue] = useState(null);
   const [count, setCount] = useState(5);
   const [selectedImage, setSelectedImage] = useState(images[0]);
   const [cartItems, setCartItems] = useState([]);
   console.log(selectedItem);
 
-  const handleBoxClick = (item) => {
+  const handleBoxClick = (item, selectedItem) => {
+    console.log("sachin", item, selectedItem);
     setSelectedItem(item);
   };
 
@@ -216,174 +221,13 @@ export default function Home() {
               <div className="sm:order- basis-full">
                 <div className="my-6 flex gap-4">
                   <span className="text-heading text-4xl font-extrabold flex-initial ">
-                    $30.00
-                  </span>
-                  <span className="mt-3 -ml-3 font-medium text-lg">
-                    PER UNIT
+                  ${selectedTotalValue ? selectedTotalValue : 30.00}
                   </span>
                 </div>
               </div>
-              <div className=" font-semibold text-xl">Choose How Many:</div>
             </div>
           </div>
-          <div>
-            {products?.map((item, index) => {
-              return (
-                <div
-                  key={index}
-                  className={`flex box-border h-[67px] w-[517px] my-4 rounded-md cursor-pointer
-            ${
-              selectedItem === item
-                ? "bg-[#FDCE0D] border-none"
-                : "bg-white border-2 border-[#8C8C8C]"
-            }`}
-                  onClick={() => handleBoxClick(item)}
-                >
-                  <div className="w-12 h-14 py-2 my-auto ml-2 bg-white border rounded border-[#9c9898] ">
-                    <Image src={item.image} width="80" height="80"></Image>
-                  </div>
-                  <div className=" flex justify-center items-center mx-1">
-                    <p className=" text-base font-bold">{item.name}</p>
-                    <span className="text-heading text-xl font-extrabold pl-3 text-[#E01F00]">
-                      {item.price}
-                    </span>
-                    <p className="mt-2 text-xs text-black font-semibold">
-                      PER UNIT
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-            {data?.product?.bulkDiscountData?.map((item, index, array) => {
-              const isLastItem = index === array.length - 1;
-              const discountValue = 100 - (item.price / 30) * 100;
-              const fixedValue = Math.abs(discountValue);
-              const totalValue = fixedValue.toFixed(0);
-
-              const totalUnit = item.quantity * item.price;
-              const totalPrice = Math.abs(totalUnit);
-              const actualPrice = Math.abs(item.quantity * 30);
-
-              const isSelected = selectedItem === item;
-              const isMostPopular =
-                item.mostPopular && (!selectedItem || selectedItem === item);
-
-              return (
-                <div key={item.id}>
-                  {item.mostPopular && (
-                    <div className=" box-border h-[22px] w-[113px] bg-black ml-[380px]">
-                      <p className="text-white text-sm text-center font-normal">
-                        Most Popular
-                      </p>
-                    </div>
-                  )}
-                  <div
-                    className={`box-border w-[517px] p-3 flex gap-5 mb-4 cursor-pointer rounded-md 
-                ${
-                  isSelected
-                    ? "bg-[#FDCE0D] border-none"
-                    : isMostPopular
-                    ? "bg-[#FDCE0D] border-none"
-                    : "bg-white border-2 border-[#8C8C8C]"
-                }
-                ${isLastItem ? "h-[120px]" : "h-[80px]"}`}
-                    key={item.id}
-                    onClick={() => handleBoxClick(item)}
-                  >
-                    <div className=" flex">
-                      <div className="flex gap-2">
-                        {item.image ? (
-                          <div className=" w-12 h-14 py-2 bg-white border rounded border-[#9c9898]">
-                            <Image
-                              src={item.image}
-                              width="80"
-                              height="80"
-                            ></Image>
-                          </div>
-                        ) : null}
-                        <div className=" my-auto">
-                          <span className="text-lg text-black font-bold">
-                            Buy {item.quantity} &
-                            <span className="text-lg text-[#E01F00] font-bold">
-                              {" "}
-                              Get {totalValue}%off
-                            </span>
-                          </span>
-                          <div>
-                            <span className=" font-medium text-sm">
-                              <span>
-                                Free
-                                <span className="ml-1">|</span>
-                                <span className="ml-1">{item.freeProduct}</span>
-                              </span>
-                            </span>
-                          </div>
-                          {isLastItem && (
-                            <div className=" flex pt-2">
-                              <button
-                                className="pb-1 w-7 h-7 bg-[#F7921D] rounded-full text-2xl font-semibold flex items-center justify-center"
-                                onClick={() => setCount(count - 1)}
-                              >
-                                -
-                              </button>
-                              <span className=" ml-3">
-                                {count < 10 ? "0" : ""}
-                                {count}
-                              </span>
-                              <button
-                                className="ml-3 w-7 h-7 bg-[#F7921D] rounded-full text-2xl font-semibold flex items-center justify-center"
-                                onClick={() => setCount(count + 1)}
-                              >
-                                +
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div
-                        className={`${
-                          item.image ? "min-w-[150px]" : "min-w-[210px]"
-                        }`}
-                      ></div>
-                      <div className="flex mt-1">
-                        {data?.product?.bulkDiscountEnabled ? (
-                          <div>
-                            <div>
-                              <span className="text-base font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold">
-                                ${totalPrice}{" "}
-                              </span>
-                              <span className="text-base font-medium text-[#3A3A3A] line-through max-sm:text-[16px] max-sm:font-semibold">
-                                ${actualPrice}{" "}
-                              </span>
-                            </div>
-                            <div className="flex">
-                              <span className="text-xl text-black font-extrabold max-sm:text-[16px] max-sm:font-bold">
-                                ${item.price}
-                              </span>
-                              <p className="text-sm text-black font-semibold pl-1 pt-[6px]">
-                                PER UNIT
-                              </p>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className=" mt-1">
-                            <span className="text-xl font-extrabold text-[#E01F00] max-sm:text-[16px] max-sm:font-extrabold">
-                              ${totalPrice}{" "}
-                            </span>
-                            <span className="text-lg font-medium text-[#3A3A3A] line-through max-sm:text-[16px] max-sm:font-semibold">
-                              ${actualPrice}{" "}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="basis-full sm:order-2 box-border h-[70px] w-[517px] p-4 bg-[#F7921D] max-sm:w-full flex  mt-[50px] rounded-full">
+          <div className="basis-full sm:order-2 box-border h-[70px] w-[517px] p-4 bg-[#F7921D] max-sm:w-full flex rounded-full">
             <button
               className="w-full  bg-racky-orange px-8 text-xl font-body  font-extrabold rounded-full mb-sm-y-spacing"
               onClick={() => addToCart({ id: 1, name: "Product 1" })}
@@ -404,6 +248,180 @@ export default function Home() {
                 Add to Cart
               </span>
             </button>
+          </div>
+          <div className=" font-semibold text-xl mt-2">Choose How Many:</div>
+          <div>
+            {products?.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className={`flex box-border h-[67px] w-[517px] my-4 rounded-md cursor-pointer justify-between
+            ${
+              selectedItem?.name === item?.name
+                ? "bg-[#FDCE0D] border-2 border-[#FDCE0D]"
+                : "bg-white border-2 border-[#8C8C8C]"
+            }`}
+                  onClick={() => handleBoxClick(item, selectedItem)}
+                >
+                  <div className="flex justify-center items-center mx-1">
+                    <div className="w-12 h-14 py-2 my-auto ml-2 bg-white rounded-sm shadow">
+                      <Image
+                        src={item.image}
+                        width="80"
+                        height="80"
+                        className="rounded-sm"
+                      ></Image>
+                    </div>
+                    <p className=" text-base flex font-bold items-center mx-1">
+                      {item.name}
+                    </p>
+                  </div>
+                  <div className=" flex justify-center items-center mx-1">
+                    <span className="text-heading text-xl font-extrabold pl-3 text-red">
+                      {item.price}
+                    </span>
+                    <p className="mt-2 text-xs text-black font-semibold p-0.5">
+                      PER UNIT
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+            {data?.product?.bulkDiscountData?.map((item, index, array) => {
+              const isLastItem = index === array.length - 1;
+              const discountValue = 100 - (item.price / 30) * 100;
+              const fixedValue = Math.abs(discountValue);
+              const totalValue = fixedValue.toFixed(0);
+
+              const totalUnit = item.quantity * item.price;
+              const totalPrice = Math.abs(totalUnit);
+              const lastTotalPrice = Math.abs(count * item.price);
+              const actualPrice = Math.abs(item.quantity * 30);
+
+              const isSelected = selectedItem === item;
+              const isMostPopular =
+                item.mostPopular && (!selectedItem || selectedItem === item);
+
+              return (
+                <div key={item.id}>
+                  {item.mostPopular && (
+                    <div className=" box-border h-[22px] w-[113px] bg-black ml-[380px]">
+                      <p className="text-white text-sm text-center font-normal">
+                        Most Popular
+                      </p>
+                    </div>
+                  )}
+                  <div
+                    className={`box-border w-[517px] p-3 flex gap-5 mb-4 cursor-pointer rounded-md 
+                ${
+                  isSelected
+                    ? "bg-[#FDCE0D] border-2 border-[#FDCE0D]"
+                    : isMostPopular
+                    ? "bg-[#FDCE0D] border-2 border-[#FDCE0D]"
+                    : "bg-white border-2 border-[#8C8C8C]"
+                }
+                ${isLastItem ? "h-[120px]" : "h-[80px]"}`}
+                    key={item.id}
+                    onClick={() => {
+                      handleBoxClick(item);
+                      setSelectedTotalValue(totalPrice);
+                    }}
+                  >
+                    <div className=" flex w-full justify-between">
+                      <div className="flex gap-2">
+                        {item.image ? (
+                          <div className=" w-12 h-14 py-2 bg-white rounded-sm shadow">
+                            <Image
+                              src={item.image}
+                              width="80"
+                              height="80"
+                              className="rounded-sm"
+                            ></Image>
+                          </div>
+                        ) : null}
+                        <div className=" my-auto">
+                          <span className="text-lg text-black font-bold">
+                            Buy {item.quantity} &
+                            <span className="text-lg text-red font-bold">
+                              {" "}
+                              Get {totalValue}%off
+                            </span>
+                          </span>
+                          <div>
+                            <span className=" font-medium text-sm">
+                              <span>
+                                Free
+                                <span className="ml-1">|</span>
+                                <span className="ml-1">
+                                  {item.freeProduct.name}
+                                </span>
+                              </span>
+                            </span>
+                          </div>
+                          {isLastItem && (
+                            <div className=" flex pt-2">
+                              <button
+                                className="pb-1 w-7 h-7 bg-[#F7921D] rounded-full text-2xl font-semibold flex items-center justify-center"
+                                onClick={() => setCount(count - 1)}
+                              >
+                                -
+                              </button>
+                              <span className=" ml-5">
+                                {count < 10 ? "0" : ""}
+                                {count}
+                              </span>
+                              <button
+                                className="ml-5 w-7 h-7 bg-[#F7921D] rounded-full text-2xl font-semibold flex items-center justify-center"
+                                onClick={() => setCount(count + 1)}
+                              >
+                                +
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex mt-1">
+                        {data?.product?.bulkDiscountEnabled ? (
+                          <div>
+                            <div>
+                              {isLastItem ? (
+                                <span className="text-base font-extrabold text-red max-sm:text-[16px] max-sm:font-extrabold">
+                                  ${lastTotalPrice}{" "}
+                                </span>
+                              ) : (
+                                <span className="text-base font-extrabold text-red max-sm:text-[16px] max-sm:font-extrabold">
+                                  ${totalPrice}{" "}
+                                </span>
+                              )}
+                              <span className="text-base font-medium text-[#3A3A3A] line-through max-sm:text-[16px] max-sm:font-semibold">
+                                ${actualPrice}{" "}
+                              </span>
+                            </div>
+                            <div className="flex">
+                              <span className="text-xl text-black font-extrabold max-sm:text-[16px] max-sm:font-bold">
+                                ${item.price}
+                              </span>
+                              <p className="text-sm text-black font-semibold pl-1 pt-[6px]">
+                                PER UNIT
+                              </p>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className=" mt-1">
+                            <span className="text-xl font-extrabold text-red max-sm:text-[16px] max-sm:font-extrabold">
+                              ${totalPrice}{" "}
+                            </span>
+                            <span className="text-lg font-medium text-[#3A3A3A] line-through max-sm:text-[16px] max-sm:font-semibold">
+                              ${actualPrice}{" "}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
