@@ -88,6 +88,32 @@ export default function Home() {
     setCartItems(updatedCart);
   };
 
+  const calculateValues = (item, index, array) => {
+    const isLastItem = index === array.length - 1;
+    const discountValue = 100 - (item.price / 30) * 100;
+    const fixedValue = Math.abs(discountValue);
+    const totalValue = fixedValue.toFixed(0);
+
+    const totalUnit = item.quantity * item.price;
+    const totalPrice = Math.abs(totalUnit);
+    const lastTotalPrice = Math.abs(count * item.price);
+    const actualPrice = Math.abs(item.quantity * 30);
+
+    const isSelected = selectedItem === item;
+    const isMostPopular =
+      item.mostPopular && (!selectedItem || selectedItem === item);
+
+    return {
+      isLastItem,
+      totalValue,
+      totalPrice,
+      lastTotalPrice,
+      actualPrice,
+      isSelected,
+      isMostPopular,
+    };
+  };
+
   const { loading, data, error } = useQuery(AllData);
   console.log(data);
   console.log(cartItems);
@@ -221,7 +247,7 @@ export default function Home() {
               <div className="sm:order- basis-full">
                 <div className="my-6 flex gap-4">
                   <span className="text-heading text-4xl font-extrabold flex-initial ">
-                  ${selectedTotalValue ? selectedTotalValue : 30.00}
+                    ${selectedTotalValue ? selectedTotalValue : 30.0}
                   </span>
                 </div>
               </div>
@@ -288,20 +314,15 @@ export default function Home() {
               );
             })}
             {data?.product?.bulkDiscountData?.map((item, index, array) => {
-              const isLastItem = index === array.length - 1;
-              const discountValue = 100 - (item.price / 30) * 100;
-              const fixedValue = Math.abs(discountValue);
-              const totalValue = fixedValue.toFixed(0);
-
-              const totalUnit = item.quantity * item.price;
-              const totalPrice = Math.abs(totalUnit);
-              const lastTotalPrice = Math.abs(count * item.price);
-              const actualPrice = Math.abs(item.quantity * 30);
-
-              const isSelected = selectedItem === item;
-              const isMostPopular =
-                item.mostPopular && (!selectedItem || selectedItem === item);
-
+              const {
+                isLastItem,
+                totalValue,
+                totalPrice,
+                lastTotalPrice,
+                actualPrice,
+                isSelected,
+                isMostPopular,
+              } = calculateValues(item, index, array);
               return (
                 <div key={item.id}>
                   {item.mostPopular && (
